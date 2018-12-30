@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SMF Vélos, réservation de vélos</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <meta name="title" content="SMF Vélos : La réservation en un clic !">
+    <meta name="description" content="SMF Vélos est la référence pour réserver un vélo à Saint-Maur-des-Fossés. En effet, son diaporama
+    explicatif et sa carte interactive permette, en un tour de main, de prendre un vélo dans la ville. Celui-ci reste disponible une
+    vingtaine de minutes puis est remis à disposition. La ville demande simplement une petite signature, un nom et un prénom. Bonne route !">
+    <meta name="keywords" content="bike reservation, bike rent">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <!-- normalize.css is included in bootstrap -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="container-fluid">
+        <div class="row">
+            <nav class="navbar fixed-top navbar-expand-sm">
+                <a class="navbar-brand" href="index.html"><img src="images/logovelo.png" alt="Logo SMF Vélos" id="imgLogo" /></a>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#diaporama">Diaporama</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#reservation">Réservation</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </header>
+
+    <section id="diaporama" class="container-fluid">
+        <div class="row centerText">
+            <!--
+            <figure>
+                <img class="imgDiap" id="imgCycleWelcome" src="images/bicycleWelcome.jpg" alt="Vélo Bonjour" />
+            </figure>
+            -->
+            <div class="imgDiap" id="imgSlid1">
+                <div class="blockInstructions">
+                    <h1 class="titleDiap"><span class="lobsterStyle">SMF Vélos</span>, l'application de réservation
+                        <span class="vertT">écolo !</span></h1>
+                    <span class="instructions">Ce diaporama vous explique toute la démarche à suivre pour réserver en
+                        ligne, alors n'hésitez plus !</span>
+                    <a id="firstButtonSlide" class="btn btn-primary">Cliquez-ici pour en savoir plus</a>
+                </div>
+            </div>
+            <div class="imgDiap" id="imgSlid2">
+                <div class="blockInstructions">
+                    <span class="instructionsWhite">C'est simple et rapide ! La carte vous permet de choisir la station la
+                        plus proche, il suffit de cliquer dessus</span>
+                </div>
+            </div>
+            <div class="imgDiap" id="imgSlid3">
+                <div class="blockInstructions">
+                    <span class="instructionsWhite">Des informations vous sont données concernant le nombre de
+                        disponibilités</span>
+                </div>
+            </div>
+
+            <div class="imgDiap" id="imgSlid4">
+                <div class="blockInstructions">
+                    <span class="instructionsWhite">Vous signez et c'est terminé !</span>
+                </div>
+            </div>
+
+            <a id="prev">&#10094;</a>
+            <a id="next">&#10095;</a>
+
+            <div class="container-fluid">
+                <div class="col-sm-12 row controlDiap">
+                    <div class="offset-md-5 col-sm-1">
+                        <a id="startDiap"><i class="fas fa-play"></i></a>
+                    </div>
+                    <div class="col-sm-1">
+                        <a id="stopDiap"><i class="fas fa-pause"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="myProgress">
+                <div id="divTime"></div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="reservation">
+        <p>Hello everyone, i will put the map just here, it is just to see how the slider and the buttons react to this
+            paragraph</p>
+    </section>
+
+    <footer>
+
+    </footer>
+
+    <script src="js/slider.js"></script>
+    <!-- <script src="js/jdr.js"></script> -->
+    <!-- <script src="js/exo.js"></script> -->
+    <!--<script src="js/test.js"></script>-->
+
+</body>
+
+</html>

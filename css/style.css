@@ -1,0 +1,208 @@
+/* FONTS */
+
+/* GENERAL */
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #92c7fd;
+}
+
+section {
+    width: 100%;
+}
+
+/* BODY */
+
+/* HEADER */
+
+header {
+    line-height: 88px;
+}
+
+.navbar {
+    padding: 0px 70px 0px 70px;
+    background-color: rgba(0, 19, 53, 0.4) !important;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+nav ul li {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+nav ul li a {
+    border-top: 4px solid rgba(0, 19, 53, 0);
+    border-bottom: 4px solid rgba(0, 19, 53, 0);
+    font-size: 20px;
+}
+
+nav ul li a:hover {
+    border-top: 4px solid #92c7fd;
+    border-bottom: 4px solid #92c7fd;
+}
+
+#imgLogo {
+    width: 88px;
+    height: 88px;
+}
+
+/* SLIDER */
+
+.centerText {
+    text-align: center;
+}
+
+.imgDiap {
+    width: 100%;
+    background-size: cover;
+    height: 720px;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation-name: fadeDiap;
+    animation-duration: 1.5s;
+}
+
+.titleDiap {
+    color: white;
+    text-shadow: 2px 2px 10px black;
+    font-size: 50px;
+}
+
+.vertT{
+    color: #30d138;
+}
+
+.violetT{
+    color: #b254ce;
+}
+
+.instructions, .instructionsWhite {
+    display:block;
+    width:100%;
+    color: #23ff8f;
+    font-size: 35px;
+    padding-bottom: 40px;
+    font-weight: 500;
+    text-shadow: 2px 2px 10px black;
+}
+
+.instructionsWhite {
+    color: white;
+}
+
+.btn-primary {
+    background-color: rgba(138, 37, 177, 0.8);
+    border-color: rgba(138, 37, 177, 0.8);
+    padding: 10px;
+}
+
+.btn-primary:hover {
+    background-color: rgba(190, 46, 247, 0.8);
+    border-color: rgba(190, 46, 247, 0.8);
+}
+
+.blockInstructions {
+    width: 80%;
+    margin: auto;
+    margin-top: 250px;
+}
+
+.lobsterStyle {
+    font-family: 'Lobster';
+    color: #3e8fd6;
+    font-size: 72px;
+}
+
+@keyframes fadeDiap {
+    from {
+        opacity: .4
+    }
+    to {
+        opacity: 1
+    }
+}
+
+#imgSlid1 {
+    background-image: url(../images/bicycleCouple.jpg);
+}
+
+#imgSlid2 {
+    background-image: url(../images/bicycleBlue.jpg);
+    display: none;
+}
+
+#imgSlid3 {
+    background-image: url(../images/bicycleCouple2.jpg);
+    display: none;
+}
+
+#imgSlid4 {
+    
+    background-image: url(../images/bicycleRoad.jpg);
+    display: none;
+}
+
+#prev, #next {
+    cursor: pointer;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 50px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 32px;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+#prev {
+    padding-right: 5px;
+    border-radius: 0px 50px 50px 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#next {
+    right: 0;
+    padding-left: 5px;
+    border-radius: 50px 0px 0px 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#firstButtonSlide {
+    color: white;
+}
+
+#myProgress {
+    width: 100%;
+    background-color: grey;
+    height: 10px;
+}
+
+#divTime {
+    width: 0%;
+    height: 10px;
+    background-color: #5cadd3;
+}
+
+#stopDiap, #startDiap{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.6);
+    color:white;
+    padding: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 10px;
+}
+
+.controlDiap{
+    position:absolute;
+    bottom:20px;
+}
