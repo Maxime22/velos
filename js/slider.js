@@ -69,7 +69,7 @@ function changeSlide(changeSlideVar) {
         currentSlide = 1;
     }
 
-    for (var i = 0; i < numberOfSlides.length; i++) {
+    for (let i = 0; i < numberOfSlides.length; i++) {
         numberOfSlides[i].style.display = "none";
     }
 
@@ -80,10 +80,10 @@ function changeSlide(changeSlideVar) {
 }
 
 function progressBar(widthBar2) {
-    var elem = document.getElementById("divTime");
+    let elem = document.getElementById("divTime");
 
     intervals.forEach(clearInterval); // clear all the intervals used if some exist
-    var intvl = setInterval(frame, 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
+    let intvl = setInterval(frame, 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
     intervals.push(intvl);
 
     function frame() {

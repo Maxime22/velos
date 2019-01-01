@@ -4,16 +4,12 @@
 
 a {
     text-decoration: none;
-    color: white;
+    color: white !important;
 }
 
 a:hover {
     text-decoration: none;
     color: #92c7fd;
-}
-
-section {
-    width: 100%;
 }
 
 /* BODY */
@@ -45,6 +41,7 @@ nav ul li a {
 nav ul li a:hover {
     border-top: 4px solid #92c7fd;
     border-bottom: 4px solid #92c7fd;
+    color : #92c7fd !important;
 }
 
 #imgLogo {
@@ -74,17 +71,17 @@ nav ul li a:hover {
     font-size: 50px;
 }
 
-.vertT{
+.vertT {
     color: #30d138;
 }
 
-.violetT{
+.violetT {
     color: #b254ce;
 }
 
 .instructions, .instructionsWhite {
-    display:block;
-    width:100%;
+    display: block;
+    width: 100%;
     color: #23ff8f;
     font-size: 35px;
     padding-bottom: 40px;
@@ -143,7 +140,6 @@ nav ul li a:hover {
 }
 
 #imgSlid4 {
-    
     background-image: url(../images/bicycleRoad.jpg);
     display: none;
 }
@@ -192,17 +188,22 @@ nav ul li a:hover {
     background-color: #5cadd3;
 }
 
-#stopDiap, #startDiap{
+#stopDiap, #startDiap {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.6);
-    color:white;
+    color: white;
     padding: 10px;
     padding-right: 15px;
     padding-left: 15px;
     border-radius: 10px;
+    display: inline-block; 
 }
 
-.controlDiap{
-    position:absolute;
-    bottom:20px;
+.controlDiap {
+    position: absolute;
+    bottom: 40px;
+}
+
+#diaporama {
+    position: relative;
 }
