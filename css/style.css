@@ -207,3 +207,30 @@ nav ul li a:hover {
 #diaporama {
     position: relative;
 }
+
+/* MAP */
+
+#map{
+}
+
+/* FORM RESERVATION */
+
+#formReservation{
+    border: 1px black solid;
+    border-radius: 10px;
+    padding:20px;
+    margin: 20px;
+}
+
+#reservationBtn{
+    padding: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#titleStation{
+    font-size: 22px;
+    font-weight: bold;
+    color: #3878b1;
+}
+

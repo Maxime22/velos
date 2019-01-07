@@ -9,6 +9,7 @@ class Slider {
         this.currentSlide = null;
         this.run = null;
         this.widthBar = null;
+        this.intvl = null;
         this.intervals = []; /* Will be used to store the intervals in a global table and to be able to delete them */
         this.imagesSlide = ["imgSlid1", "imgSlid2", "imgSlid3", "imgSlid4"];
     }
@@ -183,13 +184,13 @@ class Slider {
     progressBar(widthBar2) {
         let elem = document.getElementById("divTime");
         this.intervals.forEach(clearInterval); // clear all the intervals used if some exist
-        let intvl = setInterval(this.frame(widthBar2, elem), 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
-        this.intervals.push(intvl);
+        this.intvl = setInterval(this.frame(widthBar2, elem), 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
+        this.intervals.push(this.intvl);
     }
 
     frame(widthBar2, elem) {
         if (widthBar2 >= 100) {
-            clearInterval(intvl);
+            clearInterval(this.intvl);
             changeSlide(1, 1);
             widthBar2 = 0;
             this.widthBar = widthBar2;
@@ -213,10 +214,7 @@ class Slider {
 }
 
 let slider = new Slider;
-slider.createHtml();
-slider.init();
-// We start the progress bar
-slider.progressBar(0);
+slider.createHtml(); // Why can't i put this line after the eventListeners ??????
 
 slider.btnFirstSlide.addEventListener("click", function (e) {
     slider.changeSlide(1, 1);
@@ -252,3 +250,7 @@ document.addEventListener("keyup", function (e) {
     }
 
 });
+
+slider.init();
+// We start the progress bar
+slider.progressBar(0);
