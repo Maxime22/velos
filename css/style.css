@@ -1,4 +1,13 @@
-/* FONTS */
+/* KEYFRAMES */
+
+@keyframes fadeDiap {
+    from {
+        opacity: .4
+    }
+    to {
+        opacity: 1
+    }
+}
 
 /* GENERAL */
 
@@ -11,8 +20,6 @@ a:hover {
     text-decoration: none;
     color: #92c7fd;
 }
-
-/* BODY */
 
 /* HEADER */
 
@@ -114,15 +121,6 @@ nav ul li a:hover {
     font-family: 'Lobster';
     color: #3e8fd6;
     font-size: 72px;
-}
-
-@keyframes fadeDiap {
-    from {
-        opacity: .4
-    }
-    to {
-        opacity: 1
-    }
 }
 
 #imgSlid1 {
@@ -234,3 +232,12 @@ nav ul li a:hover {
     color: #3878b1;
 }
 
+/* FOOTER */
+
+footer{
+    background-color:black;
+    height: 80px;
+    line-height: 80px;
+    color: white;
+    font-weight: bold;
+}

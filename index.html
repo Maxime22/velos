@@ -42,7 +42,7 @@
     <section id="reservation" class="container-fluid">
         <div class="row">
             <div id="map" class="col-sm-8">Hello everyone, the map will be just here, the API JC Decaux and the API
-                OpenStreetMaps
+                OpenStreetMaps (ou OpenLayers,LeafletJS,MapQuest,Mapbox)
             </div>
             <div class="col-sm-4 centerText">
                 <div id="formReservation">
@@ -85,11 +85,14 @@
     </section>
 
     <footer class="container-fluid centerText">
-        Here will be the API Web Storage
+        <div id="webStorageInfos">Here will be the API Web Storage</div>
     </footer>
 
-    <!--<script src="js/getajax.js"></script>-->
+    <!-- Needs to be called first -->
+    <script src="js/getajax.js"></script>
+
     <script src="js/sliderclass.js"></script>
+    <script src="js/jcdecaux.js"></script>
 
 </body>
 
