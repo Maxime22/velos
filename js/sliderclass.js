@@ -215,6 +215,9 @@ class Slider {
 
 let slider = new Slider;
 slider.createHtml(); // Why can't i put this line after the eventListeners ??????
+slider.init(); // Why if i put that at the end the buttons don't work ?
+// We start the progress bar
+slider.progressBar(0);
 
 slider.btnFirstSlide.addEventListener("click", function (e) {
     slider.changeSlide(1, 1);
@@ -251,6 +254,3 @@ document.addEventListener("keyup", function (e) {
 
 });
 
-slider.init();
-// We start the progress bar
-slider.progressBar(0);
