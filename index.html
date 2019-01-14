@@ -89,10 +89,48 @@
     </footer>
 
     <!-- Needs to be called first -->
-    <script src="js/getajax.js"></script>
+    <!--<script src="js/getajax.js"></script>-->
 
     <script src="js/sliderclass.js"></script>
-    <script src="js/jcdecaux.js"></script>
+    <!--<script src="js/jcdecaux.js"></script>-->
+
+    <script>
+        let slider = new Slider;
+        /*let figures = [
+            { type: 'list', value: ['1', '2', '3'] }
+        ];*/
+        let imgs = [
+            {
+                url: 'images/bicycleCouple.jpg', alt: 'Couple sur un vélo, coucher de soleil, présentation SMF',
+                title: "SMF Vélos , l'application de réservation écolo !", figcaptionTitle: "SMF Vélos , l'application de réservation écolo !",
+                figcaptionText: "Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !"
+            },
+            {
+                url: 'images/bicycleBlue.jpg', alt: 'Vélo bleu', title: "SMF Vélos , l'application de réservation écolo !",
+                figcaptionTitle: "SMF Vélos , l'application de réservation écolo !",
+                figcaptionText: "Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !"
+            },
+            {
+                url: 'images/bicycleCouple2.jpg', alt: 'Couple sur un vélo 2', title: "SMF Vélos , l'application de réservation écolo !",
+                figcaptionTitle: "SMF Vélos , l'application de réservation écolo !",
+                figcaptionText: "Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !"
+            },
+            {
+                url: 'images/bicycleRoad.jpg', alt: 'Couple sur un vélo, présentation SMF',
+                title: "SMF Vélos , l'application de réservation écolo !", figcaptionTitle: "SMF Vélos , l'application de réservation écolo !",
+                figcaptionText: "Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !"
+            }
+        ]
+
+        let displayNextBeforeButtons = true;
+        let controlButtonsStartStop = true;
+        let displayProgressBar = true;
+
+        slider.init('diaporama', slider, imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar);
+        slider.createHtml();
+        // We start the progress bar
+        slider.progressBar(0);
+    </script>
 
 </body>
 

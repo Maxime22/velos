@@ -21,6 +21,10 @@ a:hover {
     color: #92c7fd;
 }
 
+.centerText {
+    text-align: center;
+}
+
 /* HEADER */
 
 header {
@@ -58,24 +62,23 @@ nav ul li a:hover {
 
 /* SLIDER */
 
-.centerText {
-    text-align: center;
+.relativePos{
+    position: relative;
 }
 
-.imgDiap {
+.figureDiap {
     width: 100%;
-    background-size: cover;
     height: 720px;
-    background-repeat: no-repeat;
-    background-position: center;
     animation-name: fadeDiap;
     animation-duration: 1.5s;
+    /*position: relative;*/
 }
 
 .titleDiap {
     color: white;
     text-shadow: 2px 2px 10px black;
     font-size: 50px;
+    margin: auto;
 }
 
 .vertT {
@@ -86,14 +89,22 @@ nav ul li a:hover {
     color: #b254ce;
 }
 
+.blockFigcaption {
+    width:100%;
+    text-align: center;
+    top: 250px;
+    position:absolute;
+}
+
 .instructions, .instructionsWhite {
     display: block;
-    width: 100%;
     color: #23ff8f;
     font-size: 35px;
     padding-bottom: 40px;
     font-weight: 500;
     text-shadow: 2px 2px 10px black;
+    margin: auto;
+    width: 80%;
 }
 
 .instructionsWhite {
@@ -111,42 +122,17 @@ nav ul li a:hover {
     border-color: rgba(190, 46, 247, 0.8);
 }
 
-.blockInstructions {
-    width: 80%;
-    margin: auto;
-    margin-top: 250px;
-}
-
 .lobsterStyle {
     font-family: 'Lobster';
     color: #3e8fd6;
     font-size: 72px;
 }
 
-#imgSlid1 {
-    background-image: url(../images/bicycleCouple.jpg);
-}
-
-#imgSlid2 {
-    background-image: url(../images/bicycleBlue.jpg);
-    display: none;
-}
-
-#imgSlid3 {
-    background-image: url(../images/bicycleCouple2.jpg);
-    display: none;
-}
-
-#imgSlid4 {
-    background-image: url(../images/bicycleRoad.jpg);
-    display: none;
-}
-
 #prev, #next {
     cursor: pointer;
     position: absolute;
     text-align: center;
-    top: 50%;
+    top: 45%;
     width: 50px;
     margin-top: -22px;
     color: white;
@@ -178,6 +164,8 @@ nav ul li a:hover {
     width: 100%;
     background-color: grey;
     height: 10px;
+    bottom: 16px;
+    position: absolute;
 }
 
 #divTime {
@@ -200,10 +188,6 @@ nav ul li a:hover {
 .controlDiap {
     position: absolute;
     bottom: 40px;
-}
-
-#diaporama {
-    position: relative;
 }
 
 /* MAP */
