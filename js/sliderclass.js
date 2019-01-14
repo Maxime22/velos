@@ -77,6 +77,12 @@ class Slider {
             }
             figcaptionDescription.textContent = elementImage.figcaptionText;
 
+            // BUTTON FOR THE FIRST SLIDE
+            let btnFirstSlide = document.createElement("a");
+            btnFirstSlide.classList.add("btn", "btn-primary");
+            btnFirstSlide.setAttribute("id", "firstButtonSlide")
+            btnFirstSlide.textContent = "Cliquez-ici pour en savoir plus";
+
             // DELETE DISPLAY FOR TEST
             if (index !== 0) {
                 figure.style.display = 'none';
@@ -84,6 +90,9 @@ class Slider {
 
             figcaption.appendChild(figcaptionTitle);
             figcaption.appendChild(figcaptionDescription);
+            if (index === 0) {
+                figcaption.appendChild(btnFirstSlide);
+            }
             figure.appendChild(image);
             figure.appendChild(figcaption);
             sliderContainer.appendChild(figure);
@@ -191,9 +200,10 @@ class Slider {
             if (e.keyCode == "39") {
                 slider.changeSlide(1, true);
             }
-            if (e.keyCode == "32" && run === true) {
+            if (e.keyCode == "32" && this.run === true) {
                 //slider.startOrStopProgressBar(false);
-            } else if (e.keyCode == "32" && run === false) {
+                console.log("coucou");
+            } else if (e.keyCode == "32" && this.run === false) {
                 //slider.startOrStopProgressBar(true);
             }
 
@@ -244,11 +254,11 @@ class Slider {
         }
     }
 
-    startOrStopProgressBar(run){
+    startOrStopProgressBar(run) {
         this.run = run;
-        if(run === true){
+        if (run === true) {
             this.progressBar(this.widthBar);
-        }else{
+        } else {
             this.intervals.forEach(clearInterval);
         }
 

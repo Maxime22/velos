@@ -188,6 +188,8 @@ nav ul li a:hover {
 .controlDiap {
     position: absolute;
     bottom: 40px;
+    text-align: center;
+    margin: auto;
 }
 
 /* MAP */
