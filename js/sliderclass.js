@@ -10,6 +10,8 @@ class Slider {
         this.stopBtn = null;
         this.restartBtn = null;
 
+        this.btnFirstSlide = null;
+
         this.currentSlide = null;
         this.run = null;
         this.widthBar = null;
@@ -83,11 +85,12 @@ class Slider {
             btnFirstSlide.setAttribute("id", "firstButtonSlide")
             btnFirstSlide.textContent = "Cliquez-ici pour en savoir plus";
 
-            // DELETE DISPLAY FOR TEST
+            // DELETE DISPLAY FOR OTHER SLIDES
             if (index !== 0) {
                 figure.style.display = 'none';
             }
 
+            // APPENDCHILD
             figcaption.appendChild(figcaptionTitle);
             figcaption.appendChild(figcaptionDescription);
             if (index === 0) {
@@ -151,7 +154,7 @@ class Slider {
             this.restartBtn = document.getElementById("startDiap");
         }
 
-        /* PROGRESS BAR */
+        // PROGRESS BAR
         if (this.displayProgressBar === true) {
             let divProgress = document.createElement("div");
             divProgress.setAttribute("id", "myProgress");
@@ -166,10 +169,14 @@ class Slider {
 
     createEvents() {
 
-        /*this.slider.btnFirstSlide.addEventListener("click", function (e) {
-            slider.changeSlide(1, true);
-        });*/
+        if (document.getElementById("firstButtonSlide")) {
+            this.btnFirstSlide = document.getElementById("firstButtonSlide"); // Not sure i can put it here
+            this.btnFirstSlide.addEventListener("click", function (e) {
+                slider.changeSlide(1, true);
+            });
+        }
 
+        // has been initialized in the control interface but not sure it is like that
         if (this.controlButtonsStartStop === true) {
             this.stopBtn.addEventListener("click", function (e) {
                 slider.startOrStopProgressBar(false);
@@ -206,9 +213,7 @@ class Slider {
             } else if (e.keyCode == "32" && this.run === false) {
                 //slider.startOrStopProgressBar(true);
             }
-
         });
-
     }
 
     changeSlide(changeSlideVar, run) {
@@ -235,23 +240,26 @@ class Slider {
     }
 
     progressBar(widthBar2) {
-        let elem = document.getElementById("divTime");
+        let progressElem = document.getElementById("divTime");
         this.intervals.forEach(clearInterval); // clear all the intervals used if some exist
-        this.intvl = setInterval(this.frame(widthBar2, elem), 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
+        this.intvl = setInterval(frame(widthBar2, progressElem), 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
         this.intervals.push(this.intvl);
-    }
 
-    frame(widthBar2, elem) {
-        if (widthBar2 >= 100) {
-            clearInterval(this.intvl);
-            changeSlide(1, true);
-            widthBar2 = 0;
-            this.widthBar = widthBar2;
-        } else {
-            widthBar2 = widthBar2 + 0.4;
-            elem.style.width = widthBar2 + '%';
-            this.widthBar = widthBar2; // give the information globally notably for the startOrStopProgressBar function 
+        function frame(widthBar2, progressElem){
+            console.log("heyyyyyyyy");
+            if (widthBar2 >= 100) {
+                clearInterval(this.intvl);
+                changeSlide(1, true);
+                widthBar2 = 0;
+                this.widthBar = widthBar2;
+            } else {
+                widthBar2 = widthBar2 + 0.4;
+                progressElem.style.width = widthBar2 + '%';
+                console.log(this.widthBar.bind(this.progressBar));
+                //this.widthBar = widthBar2; // give the information globally notably for the startOrStopProgressBar function --> doesn't work ^^
+            }
         }
+    
     }
 
     startOrStopProgressBar(run) {
@@ -261,7 +269,6 @@ class Slider {
         } else {
             this.intervals.forEach(clearInterval);
         }
-
     }
 
 

@@ -117,9 +117,9 @@ nav ul li a:hover {
     padding: 10px;
 }
 
-.btn-primary:hover {
-    background-color: rgba(190, 46, 247, 0.8);
-    border-color: rgba(190, 46, 247, 0.8);
+.btn-primary:hover, .btn-primary:active {
+    background-color: rgba(190, 46, 247, 0.8) !important;
+    border-color: rgba(190, 46, 247, 0.8) !important;
 }
 
 .lobsterStyle {
