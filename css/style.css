@@ -52,7 +52,7 @@ nav ul li a {
 nav ul li a:hover {
     border-top: 4px solid #92c7fd;
     border-bottom: 4px solid #92c7fd;
-    color : #92c7fd !important;
+    color: #92c7fd !important;
 }
 
 #imgLogo {
@@ -62,7 +62,13 @@ nav ul li a:hover {
 
 /* SLIDER */
 
-.relativePos{
+.imgSlider {
+    object-fit: cover;
+    height: 720px;
+    width: 100%;
+}
+
+.relativePos {
     position: relative;
 }
 
@@ -90,10 +96,10 @@ nav ul li a:hover {
 }
 
 .blockFigcaption {
-    width:100%;
+    width: 100%;
     text-align: center;
     top: 250px;
-    position:absolute;
+    position: absolute;
 }
 
 .instructions, .instructionsWhite {
@@ -182,7 +188,7 @@ nav ul li a:hover {
     padding-right: 15px;
     padding-left: 15px;
     border-radius: 10px;
-    display: inline-block; 
+    display: inline-block;
 }
 
 .controlDiap {
@@ -194,25 +200,24 @@ nav ul li a:hover {
 
 /* MAP */
 
-#map{
-}
+#map {}
 
 /* FORM RESERVATION */
 
-#formReservation{
+#formReservation {
     border: 1px black solid;
     border-radius: 10px;
-    padding:20px;
+    padding: 20px;
     margin: 20px;
 }
 
-#reservationBtn{
+#reservationBtn {
     padding: 5px;
     margin-top: 20px;
     margin-bottom: 10px;
 }
 
-#titleStation{
+#titleStation {
     font-size: 22px;
     font-weight: bold;
     color: #3878b1;
@@ -220,8 +225,8 @@ nav ul li a:hover {
 
 /* FOOTER */
 
-footer{
-    background-color:black;
+footer {
+    background-color: black;
     height: 80px;
     line-height: 80px;
     color: white;

@@ -1,17 +1,9 @@
 class Slider {
 
     constructor() {
-        this.slider = null;
         this.imgs = null;
         this.displayNextBeforeButtons = null;
         this.controlButtonsStartStop = null;
-
-        // not initialized in the init because i use init only if controlButtonsStartStop is on true, good method ?
-        this.stopBtn = null;
-        this.restartBtn = null;
-
-        this.btnFirstSlide = null;
-
         this.currentSlide = null;
         this.run = null;
         this.widthBar = null;
@@ -19,12 +11,8 @@ class Slider {
         this.intervals = []; // Will be used to store the intervals in a global table and to be able to delete them
     }
 
-    init(idSlider, slider, imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar) {
-        /*
-        this.btnFirstSlide = document.getElementById("firstButtonSlide");*/
-
+    init(idSlider, imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar) {
         this.idSlider = idSlider;
-        this.slider = slider;
         this.imgs = imgs;
         this.displayNextBeforeButtons = displayNextBeforeButtons;
         this.controlButtonsStartStop = controlButtonsStartStop;
@@ -37,7 +25,6 @@ class Slider {
     createHtml() {
 
         let sectionId = document.getElementById(this.idSlider);
-
         // Create a div to contain the slider, necessary ?
         let sliderContainer = document.createElement("div");
         sliderContainer.classList.add("row", "relativePos");
@@ -51,38 +38,46 @@ class Slider {
     createImages(sliderContainer) {
 
         this.imgs.forEach(function (elementImage, index) {
-            // IMAGE
-            let figure = document.createElement("figure");
-            figure.classList.add("figureDiap");
-            figure.setAttribute("id", 'fig' + index);
 
+            let figure = document.createElement("figure");
+            let divFigure = document.createElement("div");
             let image = document.createElement("img");
+            let figcaption = document.createElement("figcaption");
+            let figcaptionTitle = document.createElement("div");
+            let figcaptionDescription = document.createElement("div");
+            let btnFirstSlide = document.createElement("a");
+
+            // FIGURE
+            divFigure.setAttribute("id", "divFigure" + index); //ID
+
+            // IMAGE
+            figure.classList.add("figureDiap");
+            figure.setAttribute("id", 'fig' + index); //ID
+
             image.setAttribute('src', elementImage.url);
             image.setAttribute('alt', elementImage.alt);
             image.setAttribute('title', elementImage.title);
-            image.style.height = '720px';
-            image.style.width = '100%';
+            image.classList.add("imgSlider");
 
             // FIGCAPTION
-            let figcaption = document.createElement("figcaption");
             figcaption.classList.add("blockFigcaption");
 
-            let figcaptionTitle = document.createElement("div");
-            figcaptionTitle.classList.add("titleDiap");
-            figcaptionTitle.textContent = elementImage.figcaptionTitle;
+            if (elementImage.figcaptionTitle) {
+                figcaptionTitle.classList.add("titleDiap");
+                figcaptionTitle.textContent = elementImage.figcaptionTitle.value;
+            }
 
-            let figcaptionDescription = document.createElement("div");
             if (index === 0) {
                 figcaptionDescription.classList.add("instructions");
             } else {
                 figcaptionDescription.classList.add("instructionsWhite");
             }
-            figcaptionDescription.textContent = elementImage.figcaptionText;
+
+            figcaptionDescription.textContent = elementImage.figcaptionText.value[0];
 
             // BUTTON FOR THE FIRST SLIDE
-            let btnFirstSlide = document.createElement("a");
             btnFirstSlide.classList.add("btn", "btn-primary");
-            btnFirstSlide.setAttribute("id", "firstButtonSlide")
+            btnFirstSlide.setAttribute("id", "firstButtonSlide") //ID
             btnFirstSlide.textContent = "Cliquez-ici pour en savoir plus";
 
             // DELETE DISPLAY FOR OTHER SLIDES
@@ -98,7 +93,8 @@ class Slider {
             }
             figure.appendChild(image);
             figure.appendChild(figcaption);
-            sliderContainer.appendChild(figure);
+            divFigure.appendChild(figure);
+            sliderContainer.appendChild(divFigure);
         });
 
     }
@@ -109,11 +105,12 @@ class Slider {
         if (this.displayNextBeforeButtons === true) {
 
             let prev = document.createElement("a");
-            prev.setAttribute("id", "prev");
+            let next = document.createElement("a");
+
+            prev.setAttribute("id", "prev"); //ID
             prev.innerHTML = "&#10094;";
 
-            let next = document.createElement("a");
-            next.setAttribute("id", "next");
+            next.setAttribute("id", "next"); //ID
             next.innerHTML = "&#10095;";
 
             sliderContainer.appendChild(prev);
@@ -124,22 +121,27 @@ class Slider {
         if (this.controlButtonsStartStop === true) {
 
             let divControl = document.createElement("div");
+            let startContain = document.createElement("div");
+            let restartBtn = document.createElement("a");
+            let icoStart = document.createElement("i");
+            let stopContain = document.createElement("div");
+            let stopBtn = document.createElement("a");
+            let icoStop = document.createElement("i");
+
             divControl.classList.add("col-12", "row", "controlDiap");
 
-            let startContain = document.createElement("div");
             startContain.classList.add("offset-5", "col-1");
-            let restartBtn = document.createElement("a");
-            restartBtn.setAttribute("id", "startDiap");
-            let icoStart = document.createElement("i");
+
+            restartBtn.setAttribute("id", "startDiap"); //ID
+
             icoStart.classList.add("fas", "fa-play");
             restartBtn.appendChild(icoStart);
             startContain.appendChild(restartBtn);
 
-            let stopContain = document.createElement("div");
             stopContain.classList.add("col-1");
-            let stopBtn = document.createElement("a");
-            stopBtn.setAttribute("id", "stopDiap");
-            let icoStop = document.createElement("i");
+
+            stopBtn.setAttribute("id", "stopDiap"); //ID
+
             icoStop.classList.add("fas", "fa-pause");
             stopBtn.appendChild(icoStop);
             stopContain.appendChild(stopBtn);
@@ -149,18 +151,16 @@ class Slider {
 
             sliderContainer.appendChild(divControl);
 
-            // GOOD TO PUT THAT HERE ?
-            this.stopBtn = document.getElementById("stopDiap");
-            this.restartBtn = document.getElementById("startDiap");
         }
 
         // PROGRESS BAR
         if (this.displayProgressBar === true) {
             let divProgress = document.createElement("div");
-            divProgress.setAttribute("id", "myProgress");
-
             let divTime = document.createElement("div");
-            divTime.setAttribute("id", "divTime");
+
+            divProgress.setAttribute("id", "myProgress"); //ID
+
+            divTime.setAttribute("id", "divTime"); //ID
 
             divProgress.appendChild(divTime);
             sliderContainer.appendChild(divProgress);
@@ -170,20 +170,22 @@ class Slider {
     createEvents() {
 
         if (document.getElementById("firstButtonSlide")) {
-            this.btnFirstSlide = document.getElementById("firstButtonSlide"); // Not sure i can put it here
-            this.btnFirstSlide.addEventListener("click", function (e) {
-                slider.changeSlide(1, true);
+            document.getElementById("firstButtonSlide").addEventListener("click", (e) => {
+                this.changeSlide(1, true);
             });
         }
 
         // has been initialized in the control interface but not sure it is like that
         if (this.controlButtonsStartStop === true) {
-            this.stopBtn.addEventListener("click", function (e) {
-                slider.startOrStopProgressBar(false);
+            let stopBtn = document.getElementById("stopDiap");
+            let restartBtn = document.getElementById("startDiap");
+
+            stopBtn.addEventListener("click", (e) => {
+                this.startOrStopProgressBar(false);
             });
 
-            this.restartBtn.addEventListener("click", function (e) {
-                slider.startOrStopProgressBar(true);
+            restartBtn.addEventListener("click", (e) => {
+                this.startOrStopProgressBar(true);
             });
         }
 
@@ -191,27 +193,27 @@ class Slider {
             let next = document.getElementById("next");
             let prev = document.getElementById("prev");
 
-            next.addEventListener("click", function (e) {
-                slider.changeSlide(1, true);
+            next.addEventListener("click", (e) => { // without this at the beginning we would have a this targeting the next and not the object
+                this.changeSlide(1, true);
             });
 
-            prev.addEventListener("click", function (e) {
-                slider.changeSlide(-1, true);
+            prev.addEventListener("click", (e) => {
+                this.changeSlide(-1, true);
             });
         }
 
-        document.addEventListener("keyup", function (e) {
-            if (e.keyCode == "37") {
-                slider.changeSlide(-1, true);
+        document.addEventListener("keyup", (e) => {
+            if (e.keyCode === 37) {
+                this.changeSlide(-1, true);
             }
-            if (e.keyCode == "39") {
-                slider.changeSlide(1, true);
+            if (e.keyCode === 39) {
+                this.changeSlide(1, true);
             }
-            if (e.keyCode == "32" && this.run === true) {
-                //slider.startOrStopProgressBar(false);
-                console.log("coucou");
-            } else if (e.keyCode == "32" && this.run === false) {
-                //slider.startOrStopProgressBar(true);
+            if (e.keyCode === 32 && this.run === true) {
+                e.preventDefault();
+                this.startOrStopProgressBar(false);
+            } else if (e.keyCode === 32 && this.run === false) {
+                this.startOrStopProgressBar(true);
             }
         });
     }
@@ -239,27 +241,27 @@ class Slider {
         this.progressBar(0);
     }
 
-    progressBar(widthBar2) {
+    progressBar(widthBarParam) {
+        this.widthBar = widthBarParam
         let progressElem = document.getElementById("divTime");
         this.intervals.forEach(clearInterval); // clear all the intervals used if some exist
-        this.intvl = setInterval(frame(widthBar2, progressElem), 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
+        this.intvl = setInterval(() => this.frame(this.widthBar, progressElem), 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
         this.intervals.push(this.intvl);
 
-        function frame(widthBar2, progressElem){
-            console.log("heyyyyyyyy");
-            if (widthBar2 >= 100) {
-                clearInterval(this.intvl);
-                changeSlide(1, true);
-                widthBar2 = 0;
-                this.widthBar = widthBar2;
-            } else {
-                widthBar2 = widthBar2 + 0.4;
-                progressElem.style.width = widthBar2 + '%';
-                console.log(this.widthBar.bind(this.progressBar));
-                //this.widthBar = widthBar2; // give the information globally notably for the startOrStopProgressBar function --> doesn't work ^^
-            }
+    }
+
+    frame(widthBarParam, progressElem) {
+        if (widthBarParam >= 100) {
+            clearInterval(this.intvl);
+            this.changeSlide(1, true);
+            widthBarParam = 0;
+            this.widthBar = widthBarParam;
+        } else {
+            console.log("progress bar progress")
+            widthBarParam = widthBarParam + 0.4;
+            progressElem.style.width = widthBarParam + '%';
+            this.widthBar = widthBarParam;
         }
-    
     }
 
     startOrStopProgressBar(run) {
