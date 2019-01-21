@@ -92,18 +92,24 @@
     <!--<script src="js/getajax.js"></script>-->
 
     <script src="js/sliderclass.js"></script>
+    <script src="js/map.js"></script>
     <!--<script src="js/jcdecaux.js"></script>-->
 
     <script>
         let slider = new Slider;
         let figcaptionsSlider = [
             { type: 'title', value: "SMF Vélos , l'application de réservation écolo !" },
-            { type: 'text', value: ["Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !", '2', '3'] }
+            {
+                type: 'text', value: ["Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !",
+                    '2',
+                    '3',
+                    '4']
+            }
         ];
         let imgs = [
             {
                 url: 'images/bicycleCouple.jpg', alt: 'Couple sur un vélo, coucher de soleil, présentation SMF',
-                title: "SMF Vélos , l'application de réservation écolo !", figcaptionTitle: figcaptionsSlider[0], 
+                title: "SMF Vélos , l'application de réservation écolo !", figcaptionTitle: figcaptionsSlider[0],
                 figcaptionText: figcaptionsSlider[1]
             },
             {

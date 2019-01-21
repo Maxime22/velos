@@ -76,7 +76,7 @@ class Slider {
                 figcaptionDescription.classList.add("instructionsWhite");
             }
 
-            figcaptionDescription.textContent = elementImage.figcaptionText.value[0];
+            figcaptionDescription.textContent = elementImage.figcaptionText.value[index];
 
             // BUTTON FOR THE FIRST SLIDE
             btnFirstSlide.classList.add("btn", "btn-primary","firstButtonSlide");
