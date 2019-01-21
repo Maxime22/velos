@@ -41,8 +41,14 @@
 
     <section id="reservation" class="container-fluid">
         <div class="row">
-            <div id="map" class="col-sm-8">Hello everyone, the map will be just here, the API JC Decaux and the API
-                OpenStreetMaps (ou OpenLayers,LeafletJS,MapQuest,Mapbox)
+            <div class="col-sm-12 centerText">
+                <h2 class="titleMapAndForm">Réservation :</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div id="map" class="col-sm-8 map">
+                <!--Hello everyone, the map will be just here, the API JC Decaux and the API
+                OpenStreetMaps (ou OpenLayers,LeafletJS,MapQuest,Mapbox)-->
             </div>
             <div class="col-sm-4 centerText">
                 <div id="formReservation">
@@ -88,9 +94,7 @@
         <div id="webStorageInfos">Here will be the API Web Storage</div>
     </footer>
 
-    <!-- Needs to be called first -->
-    <script src="js/getajax.js"></script>
-
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
     <script src="js/sliderclass.js"></script>
     <script src="js/map.js"></script>
 
@@ -136,6 +140,20 @@
         slider.createHtml();
         // We start the progress bar
         slider.progressBar(0);
+    </script>
+    <script>
+        let map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([2.462997, 48.778410]),
+                zoom: 14
+            })
+        });
     </script>
 
 </body>

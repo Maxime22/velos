@@ -62,6 +62,10 @@ nav ul li a:hover {
 
 /* SLIDER */
 
+#diaporama{
+    height: 720px;
+}
+
 .imgSlider {
     object-fit: cover;
     height: 720px;
@@ -198,9 +202,26 @@ nav ul li a:hover {
     margin: auto;
 }
 
+/* MAP AND FORM */
+
+#reservation{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: #ffffe5;
+}
+
+.titleMapAndForm {
+    margin-bottom: 20px;
+    font-family: 'Lobster', cursive;
+    color: #3878b1;
+}
+
 /* MAP */
 
-.map {}
+.map {
+    height: 550px;
+    width: 100%;
+}
 
 /* FORM RESERVATION */
 
@@ -208,7 +229,6 @@ nav ul li a:hover {
     border: 1px black solid;
     border-radius: 10px;
     padding: 20px;
-    margin: 20px;
 }
 
 #reservationBtn {
