@@ -134,7 +134,7 @@ nav ul li a:hover {
     font-size: 72px;
 }
 
-#prev, #next {
+.prev, .next {
     cursor: pointer;
     position: absolute;
     text-align: center;
@@ -147,14 +147,14 @@ nav ul li a:hover {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-#prev {
+.prev {
     padding-right: 5px;
     border-radius: 0px 50px 50px 0px;
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-#next {
+.next {
     right: 0;
     padding-left: 5px;
     border-radius: 50px 0px 0px 50px;
@@ -162,11 +162,11 @@ nav ul li a:hover {
     padding-bottom: 20px;
 }
 
-#firstButtonSlide {
+.firstButtonSlide {
     color: white;
 }
 
-#myProgress {
+.myProgress {
     width: 100%;
     background-color: grey;
     height: 10px;
@@ -174,13 +174,13 @@ nav ul li a:hover {
     position: absolute;
 }
 
-#divTime {
+.divTime {
     width: 0%;
     height: 10px;
     background-color: #5cadd3;
 }
 
-#stopDiap, #startDiap {
+.stopDiap, .startDiap {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
@@ -200,7 +200,7 @@ nav ul li a:hover {
 
 /* MAP */
 
-#map {}
+.map {}
 
 /* FORM RESERVATION */
 

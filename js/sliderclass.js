@@ -11,12 +11,13 @@ class Slider {
         this.intervals = []; // Will be used to store the intervals in a global table and to be able to delete them
     }
 
-    init(idSlider, imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar) {
+    init(idSlider, imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar, sliderNumber) {
         this.idSlider = idSlider;
         this.imgs = imgs;
         this.displayNextBeforeButtons = displayNextBeforeButtons;
         this.controlButtonsStartStop = controlButtonsStartStop;
         this.displayProgressBar = displayProgressBar;
+        this.sliderNumber = sliderNumber;
         this.currentSlide = 1;
         this.run = true; /* for the spacebar event, to know if the progressBar runs */
         this.widthBar = 0;
@@ -37,6 +38,8 @@ class Slider {
 
     createImages(sliderContainer) {
 
+        let sliderNumber = this.sliderNumber;
+
         this.imgs.forEach(function (elementImage, index) {
 
             let figure = document.createElement("figure");
@@ -48,11 +51,11 @@ class Slider {
             let btnFirstSlide = document.createElement("a");
 
             // FIGURE
-            divFigure.setAttribute("id", "divFigure" + index); //ID
+            divFigure.classList.add("divFigure" + index);
 
             // IMAGE
-            figure.classList.add("figureDiap");
-            figure.setAttribute("id", 'fig' + index); //ID
+            figure.classList.add("figureDiap"); 
+            figure.classList.add('fig' + index); 
 
             image.setAttribute('src', elementImage.url);
             image.setAttribute('alt', elementImage.alt);
@@ -76,8 +79,7 @@ class Slider {
             figcaptionDescription.textContent = elementImage.figcaptionText.value[0];
 
             // BUTTON FOR THE FIRST SLIDE
-            btnFirstSlide.classList.add("btn", "btn-primary");
-            btnFirstSlide.setAttribute("id", "firstButtonSlide") //ID
+            btnFirstSlide.classList.add("btn", "btn-primary","firstButtonSlide");
             btnFirstSlide.textContent = "Cliquez-ici pour en savoir plus";
 
             // DELETE DISPLAY FOR OTHER SLIDES
@@ -107,10 +109,10 @@ class Slider {
             let prev = document.createElement("a");
             let next = document.createElement("a");
 
-            prev.setAttribute("id", "prev"); //ID
+            prev.classList.add("prev"); 
             prev.innerHTML = "&#10094;";
 
-            next.setAttribute("id", "next"); //ID
+            next.classList.add("next"); 
             next.innerHTML = "&#10095;";
 
             sliderContainer.appendChild(prev);
@@ -132,7 +134,7 @@ class Slider {
 
             startContain.classList.add("offset-5", "col-1");
 
-            restartBtn.setAttribute("id", "startDiap"); //ID
+            restartBtn.classList.add("startDiap");
 
             icoStart.classList.add("fas", "fa-play");
             restartBtn.appendChild(icoStart);
@@ -140,7 +142,7 @@ class Slider {
 
             stopContain.classList.add("col-1");
 
-            stopBtn.setAttribute("id", "stopDiap"); //ID
+            stopBtn.classList.add("stopDiap");
 
             icoStop.classList.add("fas", "fa-pause");
             stopBtn.appendChild(icoStop);
@@ -158,9 +160,9 @@ class Slider {
             let divProgress = document.createElement("div");
             let divTime = document.createElement("div");
 
-            divProgress.setAttribute("id", "myProgress"); //ID
+            divProgress.classList.add("myProgress"); 
 
-            divTime.setAttribute("id", "divTime"); //ID
+            divTime.classList.add("divTime"); 
 
             divProgress.appendChild(divTime);
             sliderContainer.appendChild(divProgress);
@@ -169,16 +171,16 @@ class Slider {
 
     createEvents() {
 
-        if (document.getElementById("firstButtonSlide")) {
-            document.getElementById("firstButtonSlide").addEventListener("click", (e) => {
+        if (document.getElementsByClassName("firstButtonSlide")) {
+            document.getElementsByClassName("firstButtonSlide")[this.sliderNumber].addEventListener("click", (e) => {
                 this.changeSlide(1, true);
             });
         }
 
         // has been initialized in the control interface but not sure it is like that
         if (this.controlButtonsStartStop === true) {
-            let stopBtn = document.getElementById("stopDiap");
-            let restartBtn = document.getElementById("startDiap");
+            let stopBtn = document.getElementsByClassName("stopDiap")[this.sliderNumber];
+            let restartBtn = document.getElementsByClassName("startDiap")[this.sliderNumber];
 
             stopBtn.addEventListener("click", (e) => {
                 this.startOrStopProgressBar(false);
@@ -190,8 +192,8 @@ class Slider {
         }
 
         if (this.displayNextBeforeButtons === true) {
-            let next = document.getElementById("next");
-            let prev = document.getElementById("prev");
+            let next = document.getElementsByClassName("next")[this.sliderNumber];
+            let prev = document.getElementsByClassName("prev")[this.sliderNumber];
 
             next.addEventListener("click", (e) => { // without this at the beginning we would have a this targeting the next and not the object
                 this.changeSlide(1, true);
@@ -243,7 +245,7 @@ class Slider {
 
     progressBar(widthBarParam) {
         this.widthBar = widthBarParam
-        let progressElem = document.getElementById("divTime");
+        let progressElem = document.getElementsByClassName("divTime")[this.sliderNumber];
         this.intervals.forEach(clearInterval); // clear all the intervals used if some exist
         this.intvl = setInterval(() => this.frame(this.widthBar, progressElem), 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
         this.intervals.push(this.intvl);

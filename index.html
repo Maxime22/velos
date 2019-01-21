@@ -125,8 +125,9 @@
         let displayNextBeforeButtons = true;
         let controlButtonsStartStop = true;
         let displayProgressBar = true;
+        let sliderNumber = 0; // is used in case we have different slider on the same page, like that the id created won't be duplicated
 
-        slider.init('diaporama', imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar);
+        slider.init('diaporama', imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar, sliderNumber);
         slider.createHtml();
         // We start the progress bar
         slider.progressBar(0);
