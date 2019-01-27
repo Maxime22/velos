@@ -11,7 +11,7 @@ class Slider {
         this.intervals = []; // Will be used to store the intervals in a global table and to be able to delete them
     }
 
-    init(idSlider, imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar, sliderNumber) {
+    init(idSlider, imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar, sliderNumber) { // REMPLACER LA CONFIG PAR UN OBJET CONFIG DANS L'INDEX
         this.idSlider = idSlider;
         this.imgs = imgs;
         this.displayNextBeforeButtons = displayNextBeforeButtons;
@@ -24,104 +24,101 @@ class Slider {
     }
 
     createHtml() {
-
         let sectionId = document.getElementById(this.idSlider);
-        // Create a div to contain the slider, necessary ?
         let sliderContainer = document.createElement("div");
         sliderContainer.classList.add("row", "relativePos");
         sectionId.appendChild(sliderContainer);
-
-        this.createImages(sliderContainer);
+        this.createSliderContent(sliderContainer);
         this.createInterface(sliderContainer);
         this.createEvents();
     }
 
-    createImages(sliderContainer) {
-
-        let sliderNumber = this.sliderNumber;
+    createSliderContent(sliderContainer) {
+        let thisObject = this;
+        let divFigure = document.createElement("div");
+        divFigure.classList.add("divFigure"); // FIGURE CREATION
 
         this.imgs.forEach(function (elementImage, index) {
-
             let figure = document.createElement("figure");
-            let divFigure = document.createElement("div");
             let image = document.createElement("img");
             let figcaption = document.createElement("figcaption");
             let figcaptionTitle = document.createElement("div");
             let figcaptionDescription = document.createElement("div");
-            let btnFirstSlide = document.createElement("a");
+            let btnSlide = document.createElement("a");
 
-            // FIGURE
-            divFigure.classList.add("divFigure" + index);
+            thisObject.createImages(figure, image, elementImage, index)
+            thisObject.createFigcaptions(figcaption, figcaptionTitle, figcaptionDescription, elementImage, index, btnSlide)
 
-            // IMAGE
-            figure.classList.add("figureDiap"); 
-            figure.classList.add('fig' + index); 
+            if (index !== 0) { figure.style.display = "none" }
+            /*   figure.style.opacity = '0'  */ // DURING THE CREATION, DELETE DISPLAY FOR OTHER SLIDES
 
-            image.setAttribute('src', elementImage.url);
-            image.setAttribute('alt', elementImage.alt);
-            image.setAttribute('title', elementImage.title);
-            image.classList.add("imgSlider");
-
-            // FIGCAPTION
-            figcaption.classList.add("blockFigcaption");
-
-            if (elementImage.figcaptionTitle) {
-                figcaptionTitle.classList.add("titleDiap");
-                figcaptionTitle.textContent = elementImage.figcaptionTitle.value;
-            }
-
-            if (index === 0) {
-                figcaptionDescription.classList.add("instructions");
-            } else {
-                figcaptionDescription.classList.add("instructionsWhite");
-            }
-
-            figcaptionDescription.textContent = elementImage.figcaptionText.value[index];
-
-            // BUTTON FOR THE FIRST SLIDE
-            btnFirstSlide.classList.add("btn", "btn-primary","firstButtonSlide");
-            btnFirstSlide.textContent = "Cliquez-ici pour en savoir plus";
-
-            // DELETE DISPLAY FOR OTHER SLIDES
-            if (index !== 0) {
-                figure.style.display = 'none';
-            }
-
-            // APPENDCHILD
-            figcaption.appendChild(figcaptionTitle);
-            figcaption.appendChild(figcaptionDescription);
-            if (index === 0) {
-                figcaption.appendChild(btnFirstSlide);
-            }
-            figure.appendChild(image);
-            figure.appendChild(figcaption);
-            divFigure.appendChild(figure);
-            sliderContainer.appendChild(divFigure);
+            thisObject.appendChildImg(figcaption, figcaptionTitle, figcaptionDescription, index, btnSlide, figure, image, divFigure)
         });
 
+        sliderContainer.appendChild(divFigure);
+    }
+
+    createImages(figure, image, elementImage, index) {
+        figure.classList.add("figureDiap");
+        figure.classList.add('fig' + index);
+        image.setAttribute('src', elementImage.url);
+        image.setAttribute('alt', elementImage.alt);
+        image.setAttribute('title', elementImage.title);
+        image.classList.add("imgSlider");
+    }
+
+    createFigcaptions(figcaption, figcaptionTitle, figcaptionDescription, elementImage, index, btnSlide) {
+        figcaption.classList.add("blockFigcaption");
+
+        for (let i = 0; i < elementImage.figcaption.length; i++) {
+            if (elementImage.figcaption[i].type === "title") { // TITLE
+                figcaptionTitle.classList.add("titleDiap");
+                figcaptionTitle.textContent = elementImage.figcaption[i].value;
+            }
+            if (elementImage.figcaption[i].type === "text") { // TEXT
+                figcaptionDescription.textContent = elementImage.figcaption[i].value;
+            }
+            if (elementImage.figcaption[i].type === "button") { // BUTTONS
+                btnSlide.classList.add("btn", "btn-primary", "firstButtonSlide");
+                btnSlide.textContent = elementImage.figcaption[i].value;
+            }
+        }
+
+        index === 0 ? figcaptionDescription.classList.add("instructions") : figcaptionDescription.classList.add("instructionsWhite");
+    }
+
+    appendChildImg(figcaption, figcaptionTitle, figcaptionDescription, index, btnSlide, figure, image, divFigure) {
+        figcaption.appendChild(figcaptionTitle);
+        figcaption.appendChild(figcaptionDescription);
+        if (index === 0) {
+            figcaption.appendChild(btnSlide);
+        }
+        figure.appendChild(image);
+        figure.appendChild(figcaption);
+        divFigure.appendChild(figure);
     }
 
     createInterface(sliderContainer) {
+        this.createButtonNextPrev(sliderContainer)
+        this.createControlStartStop(sliderContainer)
+        this.createProgressBar(sliderContainer)
+    }
 
-        // BUTTONS PREV AND NEXT
+    createButtonNextPrev(sliderContainer) {
         if (this.displayNextBeforeButtons === true) {
-
             let prev = document.createElement("a");
             let next = document.createElement("a");
-
-            prev.classList.add("prev"); 
+            prev.classList.add("prev");
             prev.innerHTML = "&#10094;";
-
-            next.classList.add("next"); 
+            next.classList.add("next");
             next.innerHTML = "&#10095;";
-
             sliderContainer.appendChild(prev);
             sliderContainer.appendChild(next);
         }
+    }
 
-        // CONTROL START AND STOP
+    createControlStartStop(sliderContainer) {
         if (this.controlButtonsStartStop === true) {
-
             let divControl = document.createElement("div");
             let startContain = document.createElement("div");
             let restartBtn = document.createElement("a");
@@ -131,38 +128,30 @@ class Slider {
             let icoStop = document.createElement("i");
 
             divControl.classList.add("col-12", "row", "controlDiap");
-
             startContain.classList.add("offset-5", "col-1");
-
             restartBtn.classList.add("startDiap");
-
             icoStart.classList.add("fas", "fa-play");
+            stopContain.classList.add("col-1");
+            stopBtn.classList.add("stopDiap");
+            icoStop.classList.add("fas", "fa-pause");
+
             restartBtn.appendChild(icoStart);
             startContain.appendChild(restartBtn);
-
-            stopContain.classList.add("col-1");
-
-            stopBtn.classList.add("stopDiap");
-
-            icoStop.classList.add("fas", "fa-pause");
             stopBtn.appendChild(icoStop);
             stopContain.appendChild(stopBtn);
-
             divControl.appendChild(startContain);
             divControl.appendChild(stopContain);
-
             sliderContainer.appendChild(divControl);
-
         }
+    }
 
-        // PROGRESS BAR
+    createProgressBar(sliderContainer) {
         if (this.displayProgressBar === true) {
             let divProgress = document.createElement("div");
             let divTime = document.createElement("div");
 
-            divProgress.classList.add("myProgress"); 
-
-            divTime.classList.add("divTime"); 
+            divProgress.classList.add("myProgress");
+            divTime.classList.add("divTime");
 
             divProgress.appendChild(divTime);
             sliderContainer.appendChild(divProgress);
@@ -170,14 +159,17 @@ class Slider {
     }
 
     createEvents() {
+        this.createButtonsEvents()
+        this.createKeyboardEvents()
+    }
 
+    createButtonsEvents() {
         if (document.getElementsByClassName("firstButtonSlide")) {
             document.getElementsByClassName("firstButtonSlide")[this.sliderNumber].addEventListener("click", (e) => {
                 this.changeSlide(1, true);
             });
         }
 
-        // has been initialized in the control interface but not sure it is like that
         if (this.controlButtonsStartStop === true) {
             let stopBtn = document.getElementsByClassName("stopDiap")[this.sliderNumber];
             let restartBtn = document.getElementsByClassName("startDiap")[this.sliderNumber];
@@ -185,7 +177,6 @@ class Slider {
             stopBtn.addEventListener("click", (e) => {
                 this.startOrStopProgressBar(false);
             });
-
             restartBtn.addEventListener("click", (e) => {
                 this.startOrStopProgressBar(true);
             });
@@ -198,11 +189,18 @@ class Slider {
             next.addEventListener("click", (e) => { // without this at the beginning we would have a this targeting the next and not the object
                 this.changeSlide(1, true);
             });
-
             prev.addEventListener("click", (e) => {
                 this.changeSlide(-1, true);
             });
         }
+    }
+
+    createKeyboardEvents() {
+        document.addEventListener("keypress", (e) => { // Delete the scroll with the spacebar
+            if (e.keyCode === 32) {
+                e.preventDefault();
+            }
+        });
 
         document.addEventListener("keyup", (e) => {
             if (e.keyCode === 37) {
@@ -223,20 +221,17 @@ class Slider {
     changeSlide(changeSlideVar, run) {
         let allSlides = document.getElementsByClassName("figureDiap");
         this.run = run;
-
         this.currentSlide = this.currentSlide + changeSlideVar;
 
-        if (this.currentSlide <= 0) {
-            this.currentSlide = allSlides.length;
-        }
-        if (this.currentSlide > allSlides.length) {
-            this.currentSlide = 1;
-        }
+        if (this.currentSlide <= 0) { this.currentSlide = allSlides.length }
+        if (this.currentSlide > allSlides.length) { this.currentSlide = 1 }
 
         for (let i = 0; i < allSlides.length; i++) {
+            /* allSlides[i].style.opacity = "0"; */
             allSlides[i].style.display = "none";
         }
 
+        /* allSlides[this.currentSlide - 1].style.opacity = "1"; */
         allSlides[this.currentSlide - 1].style.display = "block";
 
         // Each time we change the slide, the progress bar is reinitialized
@@ -249,7 +244,6 @@ class Slider {
         this.intervals.forEach(clearInterval); // clear all the intervals used if some exist
         this.intvl = setInterval(() => this.frame(this.widthBar, progressElem), 20); // each 20 ms we add 0.4% so each 2000ms we add 40% so each 5000ms we have widthBar = 100%
         this.intervals.push(this.intvl);
-
     }
 
     frame(widthBarParam, progressElem) {
@@ -259,7 +253,6 @@ class Slider {
             widthBarParam = 0;
             this.widthBar = widthBarParam;
         } else {
-            console.log("progress bar progress")
             widthBarParam = widthBarParam + 0.4;
             progressElem.style.width = widthBarParam + '%';
             this.widthBar = widthBarParam;
@@ -268,13 +261,7 @@ class Slider {
 
     startOrStopProgressBar(run) {
         this.run = run;
-        if (run === true) {
-            this.progressBar(this.widthBar);
-        } else {
-            this.intervals.forEach(clearInterval);
-        }
+        run === true ? this.progressBar(this.widthBar) : this.intervals.forEach(clearInterval);
     }
-
-
 }
 

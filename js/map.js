@@ -4,8 +4,8 @@ ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=creteil&apiKey=1f9c43
     var creteilStations = JSON.parse(response);
     /* Display all the creteil station names */
     creteilStations.forEach(function(station){
-        console.log(station.name);
-        console.log(station.address);
+        console.log(station.name," latitude : ", station.position.lat," longitude : ", station.position.lng);
+        
     });
 });
 

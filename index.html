@@ -101,33 +101,37 @@
     <script>
         let slider = new Slider;
         let figcaptionsSlider = [
-            { type: 'title', value: "SMF Vélos , l'application de réservation écolo !" },
-            {
-                type: 'text', value: ["Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !",
-                    '2',
-                    '3',
-                    '4']
-            }
+            [
+                { type: 'title', value: "SMF Vélos , l'application de réservation écolo !" },
+                { type: 'text', value: "Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !" },
+                { type: 'button', value: "Cliquez-ici pour en savoir plus"}
+            ],
+            [
+                { type: 'text', value: "2" }
+            ],
+            [
+                { type: 'text', value: "3" }
+            ],
+            [
+                { type: 'text', value: "4" }
+            ]
         ];
         let imgs = [
             {
                 url: 'images/bicycleCouple.jpg', alt: 'Couple sur un vélo, coucher de soleil, présentation SMF',
-                title: "SMF Vélos , l'application de réservation écolo !", figcaptionTitle: figcaptionsSlider[0],
-                figcaptionText: figcaptionsSlider[1]
+                title: "SMF Vélos , l'application de réservation écolo !", figcaption: figcaptionsSlider[0]
             },
             {
-                url: 'images/bicycleBlue.jpg', alt: 'Vélo bleu', title: "SMF Vélos , l'application de réservation écolo !",
-                figcaptionText: figcaptionsSlider[1]
+                url: 'images/bicycleBlue.jpg', alt: 'Vélo bleu', title: "COMPLETE",
+                figcaption: figcaptionsSlider[1]
             },
             {
-                url: 'images/bicycleCouple2.jpg', alt: 'Couple sur un vélo 2', title: "SMF Vélos , l'application de réservation écolo !",
-                figcaptionTitle: "SMF Vélos , l'application de réservation écolo !",
-                figcaptionText: figcaptionsSlider[1]
+                url: 'images/bicycleCouple2.jpg', alt: 'Couple sur un vélo 2', title: "COMPLETE",
+                figcaption: figcaptionsSlider[2]
             },
             {
                 url: 'images/bicycleRoad.jpg', alt: 'Couple sur un vélo, présentation SMF',
-                title: "SMF Vélos , l'application de réservation écolo !", figcaptionTitle: "SMF Vélos , l'application de réservation écolo !",
-                figcaptionText: figcaptionsSlider[1]
+                title: "COMPLETE", figcaption: figcaptionsSlider[3]
             }
         ]
 
@@ -159,3 +163,9 @@
 </body>
 
 </html>
+
+<!-- 
+    url: 'images/bicycleCouple.jpg', alt: 'Couple sur un vélo, coucher de soleil, présentation SMF',
+    title: "SMF Vélos , l'application de réservation écolo !", figcaptionTitle: figcaptionsSlider[0],
+    figcaptionText: figcaptionsSlider[1]
+}, -->
