@@ -229,9 +229,8 @@ nav ul li a:hover {
 
 /* MAP */
 
-.map {
+#map {
     height: 570px;
-    width: 100%;
 }
 
 /* FORM RESERVATION */

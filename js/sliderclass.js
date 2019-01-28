@@ -11,13 +11,13 @@ class Slider {
         this.intervals = []; // Will be used to store the intervals in a global table and to be able to delete them
     }
 
-    init(idSlider, imgs, displayNextBeforeButtons, controlButtonsStartStop, displayProgressBar, sliderNumber) { // REMPLACER LA CONFIG PAR UN OBJET CONFIG DANS L'INDEX
+    init(idSlider, imgs, config) {
         this.idSlider = idSlider;
         this.imgs = imgs;
-        this.displayNextBeforeButtons = displayNextBeforeButtons;
-        this.controlButtonsStartStop = controlButtonsStartStop;
-        this.displayProgressBar = displayProgressBar;
-        this.sliderNumber = sliderNumber;
+        this.displayNextBeforeButtons = config.displayNextBeforeButtons;
+        this.controlButtonsStartStop = config.controlButtonsStartStop;
+        this.displayProgressBar = config.displayProgressBar;
+        this.sliderNumber = config.sliderNumber;
         this.currentSlide = 1;
         this.run = true; /* for the spacebar event, to know if the progressBar runs */
         this.widthBar = 0;
