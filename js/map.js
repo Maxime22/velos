@@ -3,7 +3,7 @@ class Map {
 
     constructor() {
         this.myMap = null;
-
+        this.markers = []; // we create a list for the objects markers
     }
 
     initMap(lat, lon) {
@@ -17,26 +17,44 @@ class Map {
             minZoom: 14,
             maxZoom: 20
         }).addTo(this.myMap);
+
+        // Create markers
+        this.createMarkersAndInitStations()
     }
 
-    createMarkers(){
-        this.callJCDecaux()
-        
-    }
-
-    callJCDecaux() {
-        // We use the JCDECAUX API and the ajaxGet function, the second parameter is the callback function
+    // We use the JCDECAUX API and the ajaxGet function, the second parameter is the callback function
+    createMarkersAndInitStations() {
+        // We extend the scope of this otehrwise it is undefined in the functions
         let thisObject = this;
         this.ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=creteil&apiKey=1f9c43ee6a3f921ba77e7aa991c9dcd9a957a85f", function (response) {
+            // Take the stations from the API JCDECAUX    
             let creteilStations = JSON.parse(response);
-            // Display all the creteil station names
             creteilStations.forEach(function (station) {
-                console.log(station.name, " latitude : ", station.position.lat, " longitude : ", station.position.lng);
+                // console.log(station.name, " latitude : ", station.position.lat, " longitude : ", station.position.lng);
                 let marker = L.marker([station.position.lat, station.position.lng]).addTo(thisObject.myMap);
-                // Add a pop up to see the address
-                marker.bindPopup(station.name);
+                // ADD ALL WHAT WE NEED AS INFORMATIONS IN THE MARKER FOR THE EVENT
+                marker.station_number = station.number
+                marker.station_contract_name = station.contract_name
+                marker.station_name = station.name
+                marker.station_address = station.address
+                marker.station_banking = station.banking
+                marker.station_bonus = station.bonus
+                marker.station_status = station.status
+                marker.station_bike_stands = station.bike_stands
+                marker.station_available_bike_stands = station.available_bike_stands
+                marker.station_available_bikes = station.available_bikes
+                marker.station_last_update = station.last_update
+                // console.log(marker)
+                marker.on('click', thisObject.onClickMarker) // On is like addEventListener
+                // marker.bindPopup(station.name); // Add a pop up to see the address of each station
+                // We fill and initialize the list marker to have all the informations we need about the stations who are in the markers
+                thisObject.markers.push(marker);
             });
         });
+    }
+
+    onClickMarker(eventMarker) {
+        console.log(eventMarker.target.station_address)
     }
 
     // Ajax call function
