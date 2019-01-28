@@ -4,9 +4,14 @@ class Map {
     constructor() {
         this.myMap = null;
         this.markers = []; // we create a list for the objects markers
+        this.iconBase = null;
+        this.markerClusters = null;
+        this.icons = [];
     }
 
-    initMap(lat, lon) {
+    initMap(lat, lon, iconBase) {
+
+        this.iconBase = iconBase
         // Create the object "myMap" and insert it in the HTML where the id is "map"
         this.myMap = L.map('map').setView([lat, lon], 11);
         // Leaflet doesn't receive the map (tiles) on a default server, we have to tell him which server we want. Here OpenStreetMap.fr
@@ -17,7 +22,8 @@ class Map {
             minZoom: 12,
             maxZoom: 20
         }).addTo(this.myMap);
-
+        // Initialize the assembling of markers
+        this.markerClusters = L.markerClusterGroup();
         // Create markers
         this.createMarkersAndInitStations()
     }
@@ -29,10 +35,17 @@ class Map {
         this.ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=creteil&apiKey=1f9c43ee6a3f921ba77e7aa991c9dcd9a957a85f", function (response) {
             // Take the stations from the API JCDECAUX    
             let creteilStations = JSON.parse(response);
-            creteilStations.forEach(function (station) {
-                // console.log(station.name, " latitude : ", station.position.lat, " longitude : ", station.position.lng);
-                let marker = L.marker([station.position.lat, station.position.lng]).addTo(thisObject.myMap);
-                // ADD ALL WHAT WE NEED AS INFORMATIONS IN THE MARKER FOR THE EVENT
+
+            creteilStations.forEach(function (station, index) {
+                let myIcon = thisObject.createIcon()
+                let marker = L.marker([station.position.lat, station.position.lng], { icon: myIcon });
+
+                //thisObject.icons.push(myIcon)
+                // let marker = L.marker([station.position.lat, station.position.lng], { icon: thisObject.icons[index] }); // we send the icon of our class because we need to update this icon, and the icon has to modify at the same time
+                // MarkerClusters
+                thisObject.markerClusters.addLayer(marker);
+                //let marker2 = L.marker([station.position.lat, station.position.lng]).addTo(thisObject.myMap);
+                // ADD ALL WHAT WE NEED AS INFORMATIONS IN THE MARKER FOR THE EVENT CLICK
                 // STATIC DATAS
                 marker.station_number = station.number
                 marker.station_contract_name = station.contract_name
@@ -46,15 +59,45 @@ class Map {
                 thisObject.markers.push(marker);
                 // UPDATE DYNAMIC DATAS => NECESSARY ?
                 setInterval(() => thisObject.updateMarkerDatas(marker, station), 2000000); // each 20000 ms
+                // UPDATE ICONS, LIKE THAT ?
+                setInterval(() => thisObject.updateIcons(marker), 20000); // each 20000 ms
             });
-            setInterval(console.log(thisObject.markers[0]), 2000) // Check if the dynamic datas change
+            // setInterval(console.log(thisObject.markers[0]), 2000) // Check if the dynamic datas change
+            thisObject.myMap.addLayer(thisObject.markerClusters);
         });
     }
 
     onClickMarker(eventMarker) {
-        console.log(eventMarker.target.station_address)
+        //console.log(eventMarker.target.station_address)
     }
 
+    createIcon() {
+        // We define the icon for the marker, size (iconSize), position (iconAnchor) and popupAnchor
+        let myIcon = L.icon({
+            iconUrl: this.iconBase + "bluemark.png",
+            iconSize: [30, 50],
+            iconAnchor: [14, 50]
+            //popupAnchor: [0, 100],
+        });
+        return myIcon;
+    }
+
+    updateIcons(marker) {
+        if(marker.station_available_bikes > 5){
+            let myIcon = L.icon({
+                iconUrl: this.iconBase + "greenmark.png",
+                iconSize: [30, 50],
+                iconAnchor: [14, 50]
+            });
+        }
+        /* for (let index = 0; index < this.markers.length; index++) {
+            if (this.markers[index].station_number === marker.station_number) {
+                this.markers[index] = marker;
+            }
+        } */
+    }
+
+    // EST-CE QUE CETTE FONCTION RECALL L'API ?
     updateMarkerDatas(marker, station) {
         marker.station_status = station.status
         marker.station_bike_stands = station.bike_stands
