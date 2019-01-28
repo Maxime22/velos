@@ -34,11 +34,10 @@ class Slider {
     }
 
     createSliderContent(sliderContainer) {
-        let thisObject = this;
         let divFigure = document.createElement("div");
         divFigure.classList.add("divFigure"); // FIGURE CREATION
 
-        this.imgs.forEach(function (elementImage, index) {
+        this.imgs.forEach((elementImage, index) => {
             let figure = document.createElement("figure");
             let image = document.createElement("img");
             let figcaption = document.createElement("figcaption");
@@ -46,13 +45,13 @@ class Slider {
             let figcaptionDescription = document.createElement("div");
             let btnSlide = document.createElement("a");
 
-            thisObject.createImages(figure, image, elementImage, index)
-            thisObject.createFigcaptions(figcaption, figcaptionTitle, figcaptionDescription, elementImage, index, btnSlide)
+            this.createImages(figure, image, elementImage, index)
+            this.createFigcaptions(figcaption, figcaptionTitle, figcaptionDescription, elementImage, index, btnSlide)
 
             if (index !== 0) { figure.style.display = "none" }
             /*   figure.style.opacity = '0'  */ // DURING THE CREATION, DELETE DISPLAY FOR OTHER SLIDES
 
-            thisObject.appendChildImg(figcaption, figcaptionTitle, figcaptionDescription, index, btnSlide, figure, image, divFigure)
+            this.appendChildImg(figcaption, figcaptionTitle, figcaptionDescription, index, btnSlide, figure, image, divFigure)
         });
 
         sliderContainer.appendChild(divFigure);

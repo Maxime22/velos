@@ -57,23 +57,23 @@
             </div>
             <div class="col-sm-4 centerText">
                 <div id="formReservation">
-                    <div id="titleStation">
+                    <div id='titleStation'>
                         Détails de la station :
                     </div>
-                    <p id="nameStation">
-                        Nom de la station :
+                    <p>Nom de la station :
+                        <span id='stationName'></span>
                     </p>
-                    <p id="addressStation">
-                        Adresse :
+                    <p>Adresse :
+                        <span id='stationAddress'></span>
                     </p>
-                    <p id="statusStation">
-                        Statut :
+                    <p>Statut :
+                        <span id='stationStatus'></span>
                     </p>
-                    <p id="availablePlaces">
-                        Nombre de places disponibles :
+                    <p>Nombre de places disponibles :
+                        <span id='availablePlaces'></span>
                     </p>
-                    <p id="availableBikes">
-                        Nombre de vélos disponibles :
+                    <p>Nombre de vélos disponibles :
+                        <span id='availableBikes'></span>
                     </p>
                     <form>
                         <fieldset>
@@ -86,7 +86,7 @@
                                 <label for="nameFirst">Prénom</label> :
                                 <input type="text" name="nameFirst" id="nameFirst" class="form-control" required>
                             </div>
-                            <input type="submit" id="reservationBtn" class="btn btn-primary" value="Réserver">
+                            <button type="submit" id="reservationBtn" class="btn btn-primary">Réserver</button>
                             <div>THE CANVAS SHOULD BE HERE</div>
                         </fieldset>
                     </form>
