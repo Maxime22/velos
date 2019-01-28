@@ -58,9 +58,9 @@ class Map {
                 // We fill and initialize the list marker to have all the informations we need about the stations who are in the markers
                 thisObject.markers.push(marker);
                 // UPDATE DYNAMIC DATAS => NECESSARY ?
-                setInterval(() => thisObject.updateMarkerDatas(marker, station), 2000000); // each 20000 ms
+                setInterval(() => thisObject.updateMarkerDatas(marker, station), 20000); // each 20000 ms
                 // UPDATE ICONS, LIKE THAT ?
-                setInterval(() => thisObject.updateIcons(marker), 20000); // each 20000 ms
+                /* setInterval(() => thisObject.updateIcons(marker), 20000); */ // each 20000 ms
             });
             // setInterval(console.log(thisObject.markers[0]), 2000) // Check if the dynamic datas change
             thisObject.myMap.addLayer(thisObject.markerClusters);
@@ -83,17 +83,12 @@ class Map {
     }
 
     updateIcons(marker) {
+        // NOT SURE
+        /* console.log("marker.station_available_bikes : ", marker.station_available_bikes)
+        console.log("marker.options.icon : ", marker.options.icon)
+        console.log("marker : ", marker)
         if(marker.station_available_bikes > 5){
-            let myIcon = L.icon({
-                iconUrl: this.iconBase + "greenmark.png",
-                iconSize: [30, 50],
-                iconAnchor: [14, 50]
-            });
-        }
-        /* for (let index = 0; index < this.markers.length; index++) {
-            if (this.markers[index].station_number === marker.station_number) {
-                this.markers[index] = marker;
-            }
+            marker.options.icon.iconUrl = this.iconBase + "greenmark.png";
         } */
     }
 
@@ -109,6 +104,8 @@ class Map {
                 this.markers[index] = marker;
             }
         }
+        // Update icons if necessary
+        this.updateIcons(marker)
     }
 
     // Ajax call function for the API which are sending the datas
