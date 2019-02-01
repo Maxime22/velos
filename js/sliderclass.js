@@ -35,7 +35,7 @@ class Slider {
 
     createSliderContent(sliderContainer) {
         let divFigure = document.createElement("div");
-        divFigure.classList.add("divFigure"); // FIGURE CREATION
+        divFigure.classList.add("divFigure");
 
         this.imgs.forEach((elementImage, index) => {
             let figure = document.createElement("figure");

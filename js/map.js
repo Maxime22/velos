@@ -23,7 +23,7 @@ class Map {
         // Create markers
         this.createMarkersAndInitStations()
         // Update markers
-        setInterval(() => this.createMarkersAndInitStations(), 20000); // each 20000 ms we call the API JCDecaux to have the datas we need
+        setInterval(() => this.createMarkersAndInitStations(), 1200000); // each 1 200 000 ms (20min) we call the API JCDecaux to have the datas we need
     }
 
     // We use the JCDECAUX API and the ajaxGet function, the second parameter is the callback function
@@ -62,38 +62,81 @@ class Map {
 
     onClickMarker(eventMarker) {
         //console.log(eventMarker.target.station_address)
-        let stationName = document.getElementById('stationName');
-        let stationAddress = document.getElementById('stationAddress');
-        let stationStatus = document.getElementById('stationStatus');
-        let availablePlaces = document.getElementById('availablePlaces');
-        let availableBikes = document.getElementById('availableBikes');
+        let stationName = document.getElementById('stationName')
+        let stationAddress = document.getElementById('stationAddress')
+        let stationStatus = document.getElementById('stationStatus')
+        let nbTotalPlace = document.getElementById('nbTotalPlace')
+        let availablePlaces = document.getElementById('availablePlaces')
+        let availableBikes = document.getElementById('availableBikes')
+        let buttonReservation = document.getElementById("reservationBtn")
 
         stationName.textContent = eventMarker.target.station_name;
         stationAddress.textContent = eventMarker.target.station_address;
         stationStatus.textContent = eventMarker.target.station_status;
+        nbTotalPlace.textContent = eventMarker.target.station_bike_stands;
         availablePlaces.textContent = eventMarker.target.station_available_bike_stands;
         availableBikes.textContent = eventMarker.target.station_available_bikes;
+        buttonReservation.removeAttribute("disabled")
     }
 
     updateIcons(station) { // en fonction de la station => je crée des icones différentes
         // We define the icon for the marker, size (iconSize), position (iconAnchor) and popupAnchor
         let myIcon = null;
-        if (station.available_bikes > 5) {
+        let percentageAvailable = station.available_bikes / station.bike_stands;
+        let iconAnchorBase = [14, 50];
+        let iconSizePerBikeStand = [10, 16]; // do that depending on the size of the station (bike_stands)
+        if (10 <= station.bike_stands && station.bike_stands < 20){
+            iconSizePerBikeStand = [20, 32];
+        } else if (20 <= station.bike_stands && station.bike_stands < 30){
+            iconSizePerBikeStand = [30, 48];
+        } else if (30 <= station.bike_stands && station.bike_stands < 40){
+            iconSizePerBikeStand = [40, 64];
+        } else if (40 <= station.bike_stands){
+            iconSizePerBikeStand = [50, 80];
+        }
+        
+        if (station.status === "OPEN") {
+            if (percentageAvailable === 0) {
+                myIcon = L.icon({
+                    iconUrl: this.iconBase + "redbikemark.png",
+                    iconSize: iconSizePerBikeStand,
+                    iconAnchor: iconAnchorBase
+                    //popupAnchor: [0, 100],
+                });
+            } else if (0 <= percentageAvailable && percentageAvailable < 0.25) {
+                myIcon = L.icon({
+                    iconUrl: this.iconBase + "orangebikemark.png",
+                    iconSize: iconSizePerBikeStand,
+                    iconAnchor: iconAnchorBase
+                });
+            } else if (0.25 <= percentageAvailable && percentageAvailable < 0.5) {
+                myIcon = L.icon({
+                    iconUrl: this.iconBase + "yellowbikemark.png",
+                    iconSize: iconSizePerBikeStand,
+                    iconAnchor: iconAnchorBase
+                });
+            } else if (0.5 <= percentageAvailable && percentageAvailable < 0.75) {
+                myIcon = L.icon({
+                    iconUrl: this.iconBase + "bluebikemark.png",
+                    iconSize: iconSizePerBikeStand,
+                    iconAnchor: iconAnchorBase
+                });
+            } else if (0.75 <= percentageAvailable) {
+                myIcon = L.icon({
+                    iconUrl: this.iconBase + "greenbikemark.png",
+                    iconSize: iconSizePerBikeStand,
+                    iconAnchor: iconAnchorBase
+                });
+            }
+            return myIcon;
+        } else {
             myIcon = L.icon({
-                iconUrl: this.iconBase + "bluemark.png",
-                iconSize: [30, 50],
-                iconAnchor: [14, 50]
-                //popupAnchor: [0, 100],
-            });
-        } else if (station.available_bikes <= 5) {
-            myIcon = L.icon({
-                iconUrl: this.iconBase + "greenmark.png",
-                iconSize: [30, 50],
-                iconAnchor: [14, 50]
+                iconUrl: this.iconBase + "graybikemark.png",
+                iconSize: iconSizePerBikeStand,
+                iconAnchor: iconAnchorBase
                 //popupAnchor: [0, 100],
             });
         }
-        return myIcon;
     }
 
     // Ajax call function for the API which are sending the datas

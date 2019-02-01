@@ -247,11 +247,20 @@ nav ul li a:hover {
     margin-bottom: 10px;
 }
 
+#reservationBtn:disabled, #reservationBtn:disabled:hover {
+    background-color: grey !important;
+    border: 1px grey solid !important;
+}
+
 #titleStation {
     font-size: 22px;
     font-weight: bold;
     padding-bottom: 20px;
     color: #26ad2a;
+}
+
+#secondButton{
+    padding: 5px;
 }
 
 /* FOOTER */
