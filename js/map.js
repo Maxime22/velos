@@ -76,7 +76,7 @@ class Map {
         stationStatus.textContent = eventMarker.target.station_status;
         nbTotalPlace.textContent = eventMarker.target.station_bike_stands;
         availablePlaces.textContent = eventMarker.target.station_available_bike_stands;
-        if (sessionStorage.getItem("numberAvailableBikes") && sessionStorage.getItem("stationName") === stationName) { // if we have already the number in the session storage and 
+        if (sessionStorage.getItem("numberAvailableBikes") && sessionStorage.getItem("stationName") === stationName.textContent) { // if we have already the number in the session storage and 
             // we are at the good station, we display this one, otherwise we take the data from the API
             availableBikes.textContent = sessionStorage.getItem("numberAvailableBikes")
         } else {

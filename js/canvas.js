@@ -7,9 +7,7 @@ class Canvas {
         this.idBtnValidation = null;
         this.idBtnErase = null;
         this.canIDraw = null;
-
-        this.canvas = null;
-        this.context = null;
+        this.isCanvasFilled = null;
     }
 
     initCanvas(configCanvas) {
@@ -19,6 +17,7 @@ class Canvas {
         this.idBtnErase = configCanvas.idEraseButton;
         this.displayValid = false;
         this.canIDraw = false;
+        this.isCanvasFilled = false;
     }
 
     createCanvas() {
@@ -44,6 +43,7 @@ class Canvas {
         buttonValidation.classList.add("btn", "btn-success")
         buttonValidation.setAttribute("id", this.idBtnValidation)
         buttonValidation.textContent = "Valider"
+        buttonValidation.disabled = "disabled" // We can't validate at the creation
         return buttonValidation
     }
 
@@ -52,7 +52,24 @@ class Canvas {
         buttonErase.classList.add("btn", "btn-danger")
         buttonErase.setAttribute("id", this.idBtnErase)
         buttonErase.textContent = "Effacer"
+        buttonErase.disabled = "disabled" // We can't erase at the creation
         return buttonErase
+    }
+
+    checkIfCanvasIsFilled() { // allow the validation or the erase if when we filled the canvas
+        let buttonErase = document.getElementById(this.idBtnErase)
+        let buttonValidation = document.getElementById(this.idBtnValidation)
+        if (this.isCanvasFilled) {
+            buttonErase.removeAttribute("disabled")
+            buttonValidation.removeAttribute("disabled")
+        }
+    }
+
+    disableButtonsValidateAndErase() { // forbid the validation and the erase when the canvas is erased or we just validated
+        let buttonErase = document.getElementById(this.idBtnErase)
+        let buttonValidation = document.getElementById(this.idBtnValidation)
+        buttonErase.disabled = "disabled"
+        buttonValidation.disabled = "disabled"
     }
 
     createListenersCanvas() {
@@ -76,6 +93,7 @@ class Canvas {
 
         canvas.addEventListener("mousedown", (eventMouse) => {
             this.canIDraw = true; // Allow to draw
+            this.isCanvasFilled = true;
             context.strokeStyle = "black";
             context.beginPath();
             context.moveTo(eventMouse.offsetX, eventMouse.offsetY);
@@ -89,7 +107,8 @@ class Canvas {
         });
 
         document.addEventListener("mouseup", () => { // Forbid to draw
-            this.canIDraw = false;
+            this.canIDraw = false
+            this.checkIfCanvasIsFilled()
         });
 
     }
@@ -107,12 +126,16 @@ class Canvas {
         let canvas = document.getElementById(this.idCanvas)
         let context = canvas.getContext('2d')
         context.clearRect(0, 0, 300, 150);
+        this.isCanvasFilled = false;
+        this.disableButtonsValidateAndErase()
     }
 
-    updateCanvas() {
+    updateCanvas() { // without the preventDefault of eraseCanvas otherwise the validateCanvas function didn't work
         let canvas = document.getElementById(this.idCanvas)
         let context = canvas.getContext('2d')
         context.clearRect(0, 0, 300, 150);
+        this.isCanvasFilled = false;
+        this.disableButtonsValidateAndErase()
     }
 
     validateCanvas(eventValidate) {
@@ -146,14 +169,23 @@ class Canvas {
         let nbTotalPlace = document.getElementById('nbTotalPlace')
         let availablePlaces = document.getElementById('availablePlaces')
         let availableBikes = document.getElementById('availableBikes')
+        let buttonReservation = document.getElementById("reservationBtn")
+        let messageBikesAvailable = document.getElementById("messageBikeAvailable")
 
         let numberNbTotalPlace = Number(nbTotalPlace.textContent)
         let numberAvailablePlaces = Number(availablePlaces.textContent)
         let numberAvailableBikes = Number(availableBikes.textContent)
 
         numberAvailableBikes-- // we take a bike
+        if (numberAvailableBikes !== 0) { // we check if we have more than 0 otherwise we tell it to the customer
+            buttonReservation.removeAttribute("disabled")
+            messageBikesAvailable.textContent = ""
+        } else {
+            buttonReservation.disabled = true;
+            messageBikesAvailable.textContent = "Aucun vélos disponibles !"
+        }
 
-        sessionStorage.setItem("stationName", stationName.textContent)
+        sessionStorage.setItem("stationName", stationName.textContent) // we send all to the sessionStorage
         sessionStorage.setItem("stationAddress", stationAddress.textContent)
         sessionStorage.setItem("stationStatus", stationStatus.textContent)
         sessionStorage.setItem("numberNbTotalPlace", numberNbTotalPlace)
