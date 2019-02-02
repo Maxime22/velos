@@ -78,6 +78,7 @@
                     <p>Nombre de vélos disponibles :
                         <span id='availableBikes'></span>
                     </p>
+                    <p id='messageBikeAvailable'></p>
                     <form>
                         <fieldset>
                             <legend> Réservation : </legend>
@@ -89,9 +90,11 @@
                                 <label for="nameFirst">Prénom</label> :
                                 <input type="text" name="nameFirst" id="nameFirst" class="form-control" required>
                             </div>
-                            <button type="button" id="reservationBtn" class="btn btn-primary" onclick="return createCanvas()" disabled>Réserver</button>
-                            <div id="integrateCanvas"></div>
-                            <div id="secondButton"></div>
+                            <button type="button" id="reservationBtn" class="btn btn-primary" disabled>Réserver</button>
+                            <div id ="containerCanvas">
+                                <!-- <div id="integrateCanvas"></div>
+                                <div id="buttonCanvasValidation"></div> -->
+                            </div>
                         </fieldset>
                     </form>
                 </div>
@@ -164,35 +167,29 @@
 
     <script type="text/javascript">
         let creteilMap = new Map;
-        // We initialize the center in Creteil
-        let lat = 48.778410;
-        let lon = 2.462997;
-        // File with markers
-        let iconBase = './images/';
+
+        let configMap = {
+            lat: 48.778410, // We initialize the center in Creteil
+            lon: 2.462997,
+            iconBase: './images/' // File with markers
+        }
 
         window.onload = function () {
             // The function starts when the DOM is charged
-            creteilMap.initMap(lat, lon, iconBase)
+            creteilMap.initMap(configMap)
         };
     </script>
     <script>
-        let countValid = 1;
-        function createCanvas() {
-            let divCanvas = document.getElementById("integrateCanvas")
-            let divSecondButton = document.getElementById("secondButton")
-            let canvas = document.createElement("canvas")
-            let buttonValidation = document.createElement("button")
-
-            if (countValid === 1) {
-                buttonValidation.classList.add("btn", "btn-primary")
-                buttonValidation.textContent = "Valider"
-                buttonValidation.setAttribute('id', "secondButton")
-
-                divCanvas.appendChild(canvas)
-                divSecondButton.appendChild(buttonValidation)
-                countValid++;
-            }
+        let canvas = new Canvas;
+        let configCanvas = {
+            idContainerCanvas: "containerCanvas",
+            idCanvas: "firstCanvas",
+            idValidationButton: "buttonFirstCanvasValidation",
+            idEraseButton: "buttonEraseCanvas"
         }
+        canvas.initCanvas(configCanvas);
+        canvas.createCanvas();
+
     </script>
 
 </body>

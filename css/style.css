@@ -259,8 +259,35 @@ nav ul li a:hover {
     color: #26ad2a;
 }
 
+#messageBikeAvailable{
+    font-family: 'Lobster';
+    color: red;
+    font-weight: bold;
+    font-size: 22px;
+}
+
 #secondButton{
     padding: 5px;
+}
+
+/* CANVAS */
+
+canvas{
+    border: 1px black solid;
+    background-color: white;
+}
+
+#containerCanvas{
+    margin-top: 10px;
+    display:none;
+}
+
+#containerButtonsCanvas{
+    padding-top: 10px;
+}
+
+#buttonFirstCanvasValidation{
+    margin-right:10px;
 }
 
 /* FOOTER */

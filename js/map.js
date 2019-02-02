@@ -6,10 +6,10 @@ class Map {
         this.markerClusters = null;
     }
 
-    initMap(lat, lon, iconBase) {
-        this.iconBase = iconBase
+    initMap(configMap) {
+        this.iconBase = configMap.iconBase
         // Create the object "myMap" and insert it in the HTML where the id is "map"
-        this.myMap = L.map('map').setView([lat, lon], 13);
+        this.myMap = L.map('map').setView([configMap.lat, configMap.lon], 13);
         // Leaflet doesn't receive the map (tiles) on a default server, we have to tell him which server we want. Here OpenStreetMap.fr
         // L correspond to the object Leaflet
         L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
@@ -69,6 +69,7 @@ class Map {
         let availablePlaces = document.getElementById('availablePlaces')
         let availableBikes = document.getElementById('availableBikes')
         let buttonReservation = document.getElementById("reservationBtn")
+        let messageBikesAvailable = document.getElementById("messageBikeAvailable")
 
         stationName.textContent = eventMarker.target.station_name;
         stationAddress.textContent = eventMarker.target.station_address;
@@ -76,7 +77,13 @@ class Map {
         nbTotalPlace.textContent = eventMarker.target.station_bike_stands;
         availablePlaces.textContent = eventMarker.target.station_available_bike_stands;
         availableBikes.textContent = eventMarker.target.station_available_bikes;
-        buttonReservation.removeAttribute("disabled")
+        if (eventMarker.target.station_available_bikes !== 0) {
+            buttonReservation.removeAttribute("disabled")
+            messageBikesAvailable.textContent = ""
+        } else{
+            buttonReservation.disabled = true;
+            messageBikesAvailable.textContent = "Aucun vélos disponibles !"
+        }
     }
 
     updateIcons(station) { // en fonction de la station => je crée des icones différentes
@@ -85,16 +92,16 @@ class Map {
         let percentageAvailable = station.available_bikes / station.bike_stands;
         let iconAnchorBase = [14, 50];
         let iconSizePerBikeStand = [10, 16]; // do that depending on the size of the station (bike_stands)
-        if (10 <= station.bike_stands && station.bike_stands < 20){
+        if (10 <= station.bike_stands && station.bike_stands < 20) {
             iconSizePerBikeStand = [20, 32];
-        } else if (20 <= station.bike_stands && station.bike_stands < 30){
+        } else if (20 <= station.bike_stands && station.bike_stands < 30) {
             iconSizePerBikeStand = [30, 48];
-        } else if (30 <= station.bike_stands && station.bike_stands < 40){
+        } else if (30 <= station.bike_stands && station.bike_stands < 40) {
             iconSizePerBikeStand = [40, 64];
-        } else if (40 <= station.bike_stands){
+        } else if (40 <= station.bike_stands) {
             iconSizePerBikeStand = [50, 80];
         }
-        
+
         if (station.status === "OPEN") {
             if (percentageAvailable === 0) {
                 myIcon = L.icon({
