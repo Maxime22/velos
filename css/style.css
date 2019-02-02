@@ -252,11 +252,16 @@ nav ul li a:hover {
     border: 1px grey solid !important;
 }
 
-#titleStation {
+#titleStation, #secondTitleStation {
     font-size: 22px;
     font-weight: bold;
     padding-bottom: 20px;
     color: #26ad2a;
+    text-decoration: underline;
+}
+
+#secondTitleStation{
+    padding-bottom: 0px;
 }
 
 #messageBikeAvailable{
@@ -268,6 +273,15 @@ nav ul li a:hover {
 
 #secondButton{
     padding: 5px;
+}
+
+.paraStations{
+    font-weight: 500;
+    color: gray;
+}
+
+#stationName, #stationAddress, #stationStatus, #nbTotalPlace, #availablePlaces, #availableBikes{
+    color: #3878b1;
 }
 
 /* CANVAS */
