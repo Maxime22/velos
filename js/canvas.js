@@ -109,6 +109,12 @@ class Canvas {
         context.clearRect(0, 0, 300, 150);
     }
 
+    updateCanvas() {
+        let canvas = document.getElementById(this.idCanvas)
+        let context = canvas.getContext('2d')
+        context.clearRect(0, 0, 300, 150);
+    }
+
     validateCanvas(eventValidate) {
         eventValidate.preventDefault(); // forbid the submission of the form
 
@@ -120,7 +126,7 @@ class Canvas {
 
         this.getAllStationDataAndSendToSessionStorage()
 
-        this.eraseCanvas() // delete the signature
+        this.updateCanvas() // delete the signature
         divContainerCanvas.style.display = "none" // delete the canvas container
         this.displayValid = false;
 
