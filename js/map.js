@@ -21,7 +21,7 @@ class Map {
         // Initialize the assembling of markers
         this.markerClusters = L.markerClusterGroup();
         // Create markers
-        this.createMarkersAndInitStations()
+        this.createMarkersAndInitStations() // the first time we init, we call the API
         // Update markers
         setInterval(() => this.createMarkersAndInitStations(), 1200000); // each 1 200 000 ms (20min) we call the API JCDecaux to have the datas we need
     }
@@ -76,11 +76,17 @@ class Map {
         stationStatus.textContent = eventMarker.target.station_status;
         nbTotalPlace.textContent = eventMarker.target.station_bike_stands;
         availablePlaces.textContent = eventMarker.target.station_available_bike_stands;
-        availableBikes.textContent = eventMarker.target.station_available_bikes;
+        if (sessionStorage.getItem("numberAvailableBikes") && sessionStorage.getItem("stationName") === stationName) { // if we have already the number in the session storage and 
+            // we are at the good station, we display this one, otherwise we take the data from the API
+            availableBikes.textContent = sessionStorage.getItem("numberAvailableBikes")
+        } else {
+            availableBikes.textContent = eventMarker.target.station_available_bikes;
+        }
+
         if (eventMarker.target.station_available_bikes !== 0) {
             buttonReservation.removeAttribute("disabled")
             messageBikesAvailable.textContent = ""
-        } else{
+        } else {
             buttonReservation.disabled = true;
             messageBikesAvailable.textContent = "Aucun vélos disponibles !"
         }
@@ -141,7 +147,6 @@ class Map {
                 iconUrl: this.iconBase + "graybikemark.png",
                 iconSize: iconSizePerBikeStand,
                 iconAnchor: iconAnchorBase
-                //popupAnchor: [0, 100],
             });
         }
     }

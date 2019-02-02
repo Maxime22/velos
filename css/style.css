@@ -13,12 +13,12 @@
 
 a {
     text-decoration: none;
-    color: white !important;
+    /* color: white !important; */
 }
 
 a:hover {
     text-decoration: none;
-    color: #92c7fd;
+    /* color: #92c7fd; */
 }
 
 .centerText {
@@ -29,6 +29,10 @@ a:hover {
 
 header {
     line-height: 88px;
+}
+
+.nav-link{
+    color: white;
 }
 
 .navbar {
@@ -156,7 +160,7 @@ nav ul li a:hover {
     top: 45%;
     width: 50px;
     margin-top: -22px;
-    color: white;
+    color: white !important;
     font-weight: bold;
     font-size: 32px;
     background-color: rgba(0, 0, 0, 0.6);
@@ -178,7 +182,7 @@ nav ul li a:hover {
 }
 
 .firstButtonSlide {
-    color: white;
+    color: white !important;
 }
 
 .myProgress {
@@ -198,7 +202,7 @@ nav ul li a:hover {
 .stopDiap, .startDiap {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.6);
-    color: white;
+    color: white !important;
     padding: 10px;
     padding-right: 15px;
     padding-left: 15px;
@@ -308,8 +312,13 @@ canvas{
 
 footer {
     background-color: black;
-    height: 80px;
-    line-height: 80px;
+    padding: 30px 0 30px 0;
+    min-height: 80px;
     color: white;
     font-weight: bold;
+}
+
+#cancelAllButton{
+    margin-top: 10px;
+    display: none;
 }

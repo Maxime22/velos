@@ -37,7 +37,6 @@ class Canvas {
         divContainerCanvas.appendChild(divContainerButtons)
 
         this.createListenersCanvas()
-
     }
 
     createButtonValidation() {
@@ -61,18 +60,18 @@ class Canvas {
         let context = canvas.getContext('2d')
         let btnReservation = document.getElementById("reservationBtn")
         let buttonErase = document.getElementById(this.idBtnErase)
-        let buttonValidation= document.getElementById(this.idBtnValidation)
+        let buttonValidation = document.getElementById(this.idBtnValidation)
 
         btnReservation.addEventListener("click", () => {
             this.displayCanvasAndButtons();
         });
 
-        buttonErase.addEventListener("click", () => {
-            this.eraseCanvas();
+        buttonErase.addEventListener("click", (eventErase) => {
+            this.eraseCanvas(eventErase);
         });
 
-        buttonValidation.addEventListener("click", () =>{
-            this.validateCanvas();
+        buttonValidation.addEventListener("click", (eventValidate) => {
+            this.validateCanvas(eventValidate);
         });
 
         canvas.addEventListener("mousedown", (eventMouse) => {
@@ -99,20 +98,63 @@ class Canvas {
         if (this.displayValid === false) {
             let divContainerCanvas = document.getElementById(this.idContainerCanvas)
             divContainerCanvas.style.display = "block";
-
             this.displayValid = true;
         }
     }
 
-    eraseCanvas() {
+    eraseCanvas(eventErase) {
+        eventErase.preventDefault();
         let canvas = document.getElementById(this.idCanvas)
         let context = canvas.getContext('2d')
         context.clearRect(0, 0, 300, 150);
     }
 
-    validateCanvas(){
+    validateCanvas(eventValidate) {
+        eventValidate.preventDefault(); // forbid the submission of the form
 
+        let divContainerCanvas = document.getElementById(this.idContainerCanvas)
+        let familyName = document.getElementById("nameFam")
+        let firstName = document.getElementById("nameFirst")
+        let reservationInformations = document.getElementById("webStorageInfos")
+        let buttonCancelAll = document.getElementById("cancelAllButton")
+
+        this.getAllStationDataAndSendToSessionStorage()
+
+        this.eraseCanvas() // delete the signature
+        divContainerCanvas.style.display = "none" // delete the canvas container
+        this.displayValid = false;
+
+        localStorage.setItem("familyName", familyName.value) // store the family name in the API Web Storage
+        localStorage.setItem("firstName", firstName.value) // store the first name in the API Web Storage
+
+        buttonCancelAll.style.display = "inline-block";
+
+        reservationInformations.textContent =
+            "Une réservation à la station " + sessionStorage.getItem("stationName") + " a été faite par " + localStorage.getItem("familyName") + " " + localStorage.getItem("firstName")
     }
 
+    getAllStationDataAndSendToSessionStorage() {
+        let stationName = document.getElementById('stationName')
+        let stationAddress = document.getElementById('stationAddress')
+        let stationStatus = document.getElementById('stationStatus')
+        let nbTotalPlace = document.getElementById('nbTotalPlace')
+        let availablePlaces = document.getElementById('availablePlaces')
+        let availableBikes = document.getElementById('availableBikes')
+
+        let numberNbTotalPlace = Number(nbTotalPlace.textContent)
+        let numberAvailablePlaces = Number(availablePlaces.textContent)
+        let numberAvailableBikes = Number(availableBikes.textContent)
+
+        numberAvailableBikes-- // we take a bike
+
+        sessionStorage.setItem("stationName", stationName.textContent)
+        sessionStorage.setItem("stationAddress", stationAddress.textContent)
+        sessionStorage.setItem("stationStatus", stationStatus.textContent)
+        sessionStorage.setItem("numberNbTotalPlace", numberNbTotalPlace)
+        sessionStorage.setItem("numberAvailablePlaces", numberAvailablePlaces)
+        sessionStorage.setItem("numberAvailableBikes", numberAvailableBikes)
+
+        availableBikes.textContent = numberAvailableBikes; // we update the number of bikes
+    }
 
 }

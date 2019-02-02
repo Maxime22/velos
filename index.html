@@ -81,9 +81,11 @@
                     <p id='messageBikeAvailable'></p>
                     <form>
                         <fieldset>
-                            <legend><div id='secondTitleStation'>
-                                Réservation
-                            </div></legend>
+                            <legend>
+                                <div id='secondTitleStation'>
+                                    Réservation
+                                </div>
+                            </legend>
                             <div>
                                 <label for="nameFam">Nom</label> :
                                 <input type="text" name="nameFam" id="nameFam" class="form-control" required>
@@ -93,10 +95,7 @@
                                 <input type="text" name="nameFirst" id="nameFirst" class="form-control" required>
                             </div>
                             <button type="button" id="reservationBtn" class="btn btn-primary" disabled>Réserver</button>
-                            <div id ="containerCanvas">
-                                <!-- <div id="integrateCanvas"></div>
-                                <div id="buttonCanvasValidation"></div> -->
-                            </div>
+                            <div id="containerCanvas"></div>
                         </fieldset>
                     </form>
                 </div>
@@ -105,7 +104,10 @@
     </section>
 
     <footer class="container-fluid centerText">
-        <div id="webStorageInfos">Here will be the API Web Storage</div>
+        <div>
+            <div id="webStorageInfos">Pas de réservation pour le moment</div>
+            <input type="button" id="cancelAllButton" class="btn btn-danger" value="Annuler la réservation"></input>
+        </div>
     </footer>
 
     <!-- Leaflet JS -->
@@ -193,30 +195,29 @@
         canvas.createCanvas();
 
     </script>
+    <script>
+        let reservationInformations = document.getElementById("webStorageInfos")
+        let buttonCancelAll = document.getElementById("cancelAllButton")
+        
+        // console.log(sessionStorage.getItem("stationName"))
+        if (sessionStorage.getItem("stationName")) {
+            buttonCancelAll.style.display = "inline-block";
+            reservationInformations.textContent = "Une réservation à la station " + sessionStorage.getItem("stationName") + " a été faite par " + " " + localStorage.getItem("familyName") + localStorage.getItem("firstName")
+        }
+
+        buttonCancelAll.addEventListener("click", () => {
+            let availableBikes = document.getElementById('availableBikes')
+            let numberAvailableBikes = Number(availableBikes.textContent)
+            numberAvailableBikes ++ // we replace the bike
+            sessionStorage.clear()
+            localStorage.clear()
+            buttonCancelAll.style.display = "none";
+            reservationInformations.textContent = "Pas de réservation pour le moment"
+            availableBikes.textContent = numberAvailableBikes; // we update the number of bikes
+        })
+
+    </script>
 
 </body>
 
 </html>
-
-
-
-
-<!-- 
-    url: 'images/bicycleCouple.jpg', alt: 'Couple sur un vélo, coucher de soleil, présentation SMF',
-    title: "SMF Vélos , l'application de réservation écolo !", figcaptionTitle: figcaptionsSlider[0],
-    figcaptionText: figcaptionsSlider[1]
-}, -->
-<!-- <script>
-        let map = new ol.Map({
-            target: 'map',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
-            ],
-            view: new ol.View({
-                center: ol.proj.fromLonLat([2.462997, 48.778410]),
-                zoom: 14
-            })
-        });
-    </script> -->
