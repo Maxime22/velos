@@ -21,7 +21,7 @@ class Reservation {
         this.displayValid = false;
         this.canIDraw = false;
         this.isCanvasFilled = false;
-        this.min = 1;
+        this.min = 20;
         this.sec = 0;
     }
 
@@ -93,7 +93,7 @@ class Reservation {
         localStorage.setItem("firstName", firstName.value) // store the first name in the API Web Storage
         sessionStorage.setItem("alreadyReserved", true) // create a storage for the reservation checking, to not be able to reserve several times
 
-        this.createTimer() // create the timer
+        this.createTimer(this.min, this.sec) // create the timer with constructor values (20 minutes)
 
         buttonCancelAll.style.display = "inline-block";
 
@@ -268,6 +268,8 @@ class Reservation {
         let buttonCancelAll = document.getElementById("cancelAllButton")
 
         buttonCancelAll.addEventListener("click", () => {
+            this.min = 20
+            this.sec = 0
             this.cancelAll()
         })
     }
@@ -280,20 +282,28 @@ class Reservation {
             buttonCancelAll.style.display = "inline-block";
             reservationInformations.textContent = "Une réservation à la station " + sessionStorage.getItem("stationName") + " a été faite par " + " " + localStorage.getItem("familyName") + localStorage.getItem("firstName")
         }
+
+        if(sessionStorage.getItem("seconds") && sessionStorage.getItem("minutes")){ // if we reload the page, we retake the timer
+            this.min = sessionStorage.getItem("minutes") // we change the value of the constructor to start the timer where we where before reloading the page
+            this.sec = sessionStorage.getItem("seconds")
+            this.createTimer()
+        }
     }
 
     createTimer() {
         let timerDiv = document.getElementById("timerDiv")
-        console.log("coucou")
-        /* sessionStorage.setItem("minutes", 20)
-        sessionStorage.setItem("seconds", 0) */
 
         this.intvl = setInterval(() => { this.updateTimer(timerDiv) }, 1000)
     }
 
     updateTimer(timerDiv) {
+        sessionStorage.setItem("minutes", this.min)
+        sessionStorage.setItem("seconds", this.sec)
+
+        console.log('sessionStorage.getItem("seconds") : ', sessionStorage.getItem("seconds"))
+
         if (this.min === 0 && this.sec === 0) { // when the timer is finished we clear the interval and cancel the validation
-            this.min = 20 // we reinitialize the counter
+            this.min = 20 // we reinitialize the counter, the seconds are already at 0
             this.cancelAll()
         }
 
