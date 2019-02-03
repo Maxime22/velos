@@ -70,12 +70,15 @@ class Map {
         let availableBikes = document.getElementById('availableBikes')
         let buttonReservation = document.getElementById("reservationBtn")
         let messageBikesAvailable = document.getElementById("messageBikeAvailable")
+        let allDetailsOfTheReservation = document.getElementById("allDetailsOfTheReservation") // display the informations
+        let startMessageInformation = document.getElementById("startMessageInformation")
 
         stationName.textContent = eventMarker.target.station_name;
         stationAddress.textContent = eventMarker.target.station_address;
         stationStatus.textContent = eventMarker.target.station_status;
         nbTotalPlace.textContent = eventMarker.target.station_bike_stands;
         availablePlaces.textContent = eventMarker.target.station_available_bike_stands;
+
         if (sessionStorage.getItem("numberAvailableBikes") && sessionStorage.getItem("stationName") === stationName.textContent) { // if we have already the number in the session storage and 
             // we are at the good station, we display this one, otherwise we take the data from the API
             availableBikes.textContent = sessionStorage.getItem("numberAvailableBikes")
@@ -90,6 +93,9 @@ class Map {
             buttonReservation.disabled = true;
             messageBikesAvailable.textContent = "Aucun vélos disponibles !"
         }
+
+        startMessageInformation.textContent = "";
+        allDetailsOfTheReservation.style.display = "block";
     }
 
     updateIcons(station) { // en fonction de la station => je crée des icones différentes

@@ -245,6 +245,10 @@ nav ul li a:hover {
     padding: 20px;
 }
 
+#allDetailsOfTheReservation{
+    display:none;
+}
+
 #reservationBtn {
     padding: 5px;
     margin-top: 20px;
