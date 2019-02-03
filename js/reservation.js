@@ -8,6 +8,9 @@ class Reservation {
         this.idBtnErase = null;
         this.canIDraw = null;
         this.isCanvasFilled = null;
+        this.intvl = null;
+        this.min = null;
+        this.sec = null;
     }
 
     initReservation(configCanvas) {
@@ -18,11 +21,13 @@ class Reservation {
         this.displayValid = false;
         this.canIDraw = false;
         this.isCanvasFilled = false;
+        this.min = 1;
+        this.sec = 0;
     }
 
     createReservation() {
         this.createCanvas()
-        this.createTimer()
+        this.createInformationsFooter()
         this.createListenerReservations()
     }
 
@@ -64,7 +69,7 @@ class Reservation {
                 } else {
                     alert("Un vélo est déjà réservé, veuillez annuler cette réservation pour en prendre un autre si vous le souhaitez")
                 }
-            }else{
+            } else {
                 alert("Veuillez remplir votre nom et votre prénom pour pouvoir réserver")
             }
         });
@@ -87,6 +92,8 @@ class Reservation {
         localStorage.setItem("familyName", familyName.value) // store the family name in the API Web Storage
         localStorage.setItem("firstName", firstName.value) // store the first name in the API Web Storage
         sessionStorage.setItem("alreadyReserved", true) // create a storage for the reservation checking, to not be able to reserve several times
+
+        this.createTimer() // create the timer
 
         buttonCancelAll.style.display = "inline-block";
 
@@ -122,7 +129,7 @@ class Reservation {
         availableBikes.textContent = numberAvailableBikes; // we update the number of bikes
     }
 
-    sendToSessionStorage(stationName, stationAddress, stationStatus, numberNbTotalPlace, numberAvailablePlaces, numberAvailableBikes){
+    sendToSessionStorage(stationName, stationAddress, stationStatus, numberNbTotalPlace, numberAvailablePlaces, numberAvailableBikes) {
         sessionStorage.setItem("stationName", stationName.textContent) // we send all to the sessionStorage
         sessionStorage.setItem("stationAddress", stationAddress.textContent)
         sessionStorage.setItem("stationStatus", stationStatus.textContent)
@@ -252,35 +259,64 @@ class Reservation {
 
     /* TIMER AND FOOTER */
 
-    createTimer() {
-        this.createTimerListener();
+    createInformationsFooter() {
+        this.createCancelListener();
         this.displaySessionStorageInformations();
     }
 
-    createTimerListener() {
+    createCancelListener() {
         let buttonCancelAll = document.getElementById("cancelAllButton")
 
         buttonCancelAll.addEventListener("click", () => {
-            this.cancelAll(buttonCancelAll);
+            this.cancelAll()
         })
     }
 
-    displaySessionStorageInformations(){
+    displaySessionStorageInformations() {
         let reservationInformations = document.getElementById("webStorageInfos")
         let buttonCancelAll = document.getElementById("cancelAllButton")
-        
+
         if (sessionStorage.getItem("stationName")) {
             buttonCancelAll.style.display = "inline-block";
             reservationInformations.textContent = "Une réservation à la station " + sessionStorage.getItem("stationName") + " a été faite par " + " " + localStorage.getItem("familyName") + localStorage.getItem("firstName")
         }
     }
 
-    cancelAll(buttonCancelAll) {
+    createTimer() {
+        let timerDiv = document.getElementById("timerDiv")
+        console.log("coucou")
+        /* sessionStorage.setItem("minutes", 20)
+        sessionStorage.setItem("seconds", 0) */
+
+        this.intvl = setInterval(() => { this.updateTimer(timerDiv) }, 1000)
+    }
+
+    updateTimer(timerDiv) {
+        if (this.min === 0 && this.sec === 0) { // when the timer is finished we clear the interval and cancel the validation
+            this.min = 20 // we reinitialize the counter
+            this.cancelAll()
+        }
+
+        if (this.sec !== 0) { // if the seconds are different from 0 we decrease the seconds each seconds
+            this.sec--
+        } else { // otherwise it means we have the second at 0 so we have to decrease the minutes
+            this.min--
+            this.sec = 59
+        }
+
+        if (!(this.min === 0 && this.sec === 0)) { // we don't want to display that again at the end of the timer
+            timerDiv.textContent = "Temps restant : " + this.min + " min " + this.sec + " secs"
+        }
+    }
+
+    cancelAll() {
+        let buttonCancelAll = document.getElementById("cancelAllButton")
         let reservationInformations = document.getElementById("webStorageInfos")
         let availableBikes = document.getElementById('availableBikes')
         let numberAvailableBikes = Number(availableBikes.textContent)
         let familyName = document.getElementById("nameFam")
         let firstName = document.getElementById("nameFirst")
+        let timerDiv = document.getElementById("timerDiv")
 
         familyName.value = ""; // we clear the inputs
         firstName.value = "";
@@ -291,6 +327,9 @@ class Reservation {
         buttonCancelAll.style.display = "none";
         reservationInformations.textContent = "Pas de réservation pour le moment"
         availableBikes.textContent = numberAvailableBikes; // we update the number of bikes
+
+        clearInterval(this.intvl)
+        timerDiv.textContent = ""
     }
 
 }
