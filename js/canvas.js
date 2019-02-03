@@ -80,7 +80,11 @@ class Canvas {
         let buttonValidation = document.getElementById(this.idBtnValidation)
 
         btnReservation.addEventListener("click", () => {
-            this.displayCanvasAndButtons();
+            if (!sessionStorage.getItem("alreadyReserved")) { // check if we already reserved
+                this.displayCanvasAndButtons();
+            } else {
+                alert("Un vélo est déjà réservé, veuillez annuler cette réservation pour en prendre un autre si vous le souhaitez")
+            }
         });
 
         buttonErase.addEventListener("click", (eventErase) => {
@@ -191,6 +195,8 @@ class Canvas {
         sessionStorage.setItem("numberNbTotalPlace", numberNbTotalPlace)
         sessionStorage.setItem("numberAvailablePlaces", numberAvailablePlaces)
         sessionStorage.setItem("numberAvailableBikes", numberAvailableBikes)
+
+        sessionStorage.setItem("alreadyReserved", true) // create a storage for the reservation checking, to not be able to reserve several times
 
         availableBikes.textContent = numberAvailableBikes; // we update the number of bikes
     }

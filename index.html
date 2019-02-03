@@ -118,6 +118,7 @@
     <script src="js/sliderclass.js"></script>
     <script src="js/map.js"></script>
     <script src="js/canvas.js"></script>
+    <script src="js/timer.js"></script>
 
     <script type="text/javascript">
         let slider = new Slider;
@@ -196,25 +197,9 @@
 
     </script>
     <script>
-        let reservationInformations = document.getElementById("webStorageInfos")
-        let buttonCancelAll = document.getElementById("cancelAllButton")
-        
-        // console.log(sessionStorage.getItem("stationName"))
-        if (sessionStorage.getItem("stationName")) {
-            buttonCancelAll.style.display = "inline-block";
-            reservationInformations.textContent = "Une réservation à la station " + sessionStorage.getItem("stationName") + " a été faite par " + " " + localStorage.getItem("familyName") + localStorage.getItem("firstName")
-        }
-
-        buttonCancelAll.addEventListener("click", () => {
-            let availableBikes = document.getElementById('availableBikes')
-            let numberAvailableBikes = Number(availableBikes.textContent)
-            numberAvailableBikes ++ // we replace the bike
-            sessionStorage.clear()
-            localStorage.clear()
-            buttonCancelAll.style.display = "none";
-            reservationInformations.textContent = "Pas de réservation pour le moment"
-            availableBikes.textContent = numberAvailableBikes; // we update the number of bikes
-        })
+        let timer = new Timer;
+        timer.initTimer();
+        timer.createTimer();
 
     </script>
 
