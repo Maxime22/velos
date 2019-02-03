@@ -1,4 +1,4 @@
-class Canvas {
+class Reservation {
 
     constructor() {
         this.displayValid = null;
@@ -10,7 +10,7 @@ class Canvas {
         this.isCanvasFilled = null;
     }
 
-    initCanvas(configCanvas) {
+    initReservation(configCanvas) {
         this.idContainerCanvas = configCanvas.idContainerCanvas;
         this.idCanvas = configCanvas.idCanvas;
         this.idBtnValidation = configCanvas.idValidationButton;
@@ -18,6 +18,11 @@ class Canvas {
         this.displayValid = false;
         this.canIDraw = false;
         this.isCanvasFilled = false;
+    }
+
+    createReservation() {
+        this.createCanvas()
+        this.createListenerReservations()
     }
 
     createCanvas() {
@@ -56,15 +61,6 @@ class Canvas {
         return buttonErase
     }
 
-    checkIfCanvasIsFilled() { // allow the validation or the erase if when we filled the canvas
-        let buttonErase = document.getElementById(this.idBtnErase)
-        let buttonValidation = document.getElementById(this.idBtnValidation)
-        if (this.isCanvasFilled) {
-            buttonErase.removeAttribute("disabled")
-            buttonValidation.removeAttribute("disabled")
-        }
-    }
-
     disableButtonsValidateAndErase() { // forbid the validation and the erase when the canvas is erased or we just validated
         let buttonErase = document.getElementById(this.idBtnErase)
         let buttonValidation = document.getElementById(this.idBtnValidation)
@@ -72,20 +68,33 @@ class Canvas {
         buttonValidation.disabled = "disabled"
     }
 
+    createListenerReservations() {
+        let divContainerCanvas = document.getElementById(this.idContainerCanvas)
+        let familyName = document.getElementById("nameFam")
+        let firstName = document.getElementById("nameFirst")
+
+        this.createBtnReservationListener()
+
+        familyName.addEventListener("input", (e) => { // called each time the input is changed
+            if (e.target.value === "") {
+                divContainerCanvas.style.display = "none" // delete the canvas container and the buttons if an input is not filled
+                this.displayValid = false;
+            }
+        })
+
+        firstName.addEventListener("input", (e) => {
+            if (e.target.value === "") {
+                divContainerCanvas.style.display = "none" // delete the canvas container and the buttons if an input is not filled
+                this.displayValid = false;
+            }
+        })
+    }
+
     createListenersCanvas() {
-        let canvas = document.getElementById(this.idCanvas)
-        let context = canvas.getContext('2d')
-        let btnReservation = document.getElementById("reservationBtn")
         let buttonErase = document.getElementById(this.idBtnErase)
         let buttonValidation = document.getElementById(this.idBtnValidation)
 
-        btnReservation.addEventListener("click", () => {
-            if (!sessionStorage.getItem("alreadyReserved")) { // check if we already reserved
-                this.displayCanvasAndButtons();
-            } else {
-                alert("Un vélo est déjà réservé, veuillez annuler cette réservation pour en prendre un autre si vous le souhaitez")
-            }
-        });
+        this.createMouseListeners()
 
         buttonErase.addEventListener("click", (eventErase) => {
             this.eraseCanvas(eventErase);
@@ -94,6 +103,29 @@ class Canvas {
         buttonValidation.addEventListener("click", (eventValidate) => {
             this.validateCanvas(eventValidate);
         });
+    }
+
+    createBtnReservationListener() {
+        let btnReservation = document.getElementById("reservationBtn")
+        let familyName = document.getElementById("nameFam")
+        let firstName = document.getElementById("nameFirst")
+
+        btnReservation.addEventListener("click", () => {
+            if (familyName.checkValidity() && firstName.checkValidity()) {
+                if (!sessionStorage.getItem("alreadyReserved")) { // check if we already reserved
+                    this.displayCanvasAndButtons();
+                } else {
+                    alert("Un vélo est déjà réservé, veuillez annuler cette réservation pour en prendre un autre si vous le souhaitez")
+                }
+            }else{
+                alert("Veuillez remplir votre nom et votre prénom pour pouvoir réserver")
+            }
+        });
+    }
+
+    createMouseListeners() {
+        let canvas = document.getElementById(this.idCanvas)
+        let context = canvas.getContext('2d')
 
         canvas.addEventListener("mousedown", (eventMouse) => {
             this.canIDraw = true; // Allow to draw
@@ -114,7 +146,15 @@ class Canvas {
             this.canIDraw = false
             this.checkIfCanvasIsFilled()
         });
+    }
 
+    checkIfCanvasIsFilled() { // allow the validation or the erase if when we filled the canvas
+        let buttonErase = document.getElementById(this.idBtnErase)
+        let buttonValidation = document.getElementById(this.idBtnValidation)
+        if (this.isCanvasFilled) {
+            buttonErase.removeAttribute("disabled")
+            buttonValidation.removeAttribute("disabled")
+        }
     }
 
     displayCanvasAndButtons() {

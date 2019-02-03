@@ -35,6 +35,12 @@ class Timer {
         let reservationInformations = document.getElementById("webStorageInfos")
         let availableBikes = document.getElementById('availableBikes')
         let numberAvailableBikes = Number(availableBikes.textContent)
+        let familyName = document.getElementById("nameFam")
+        let firstName = document.getElementById("nameFirst")
+
+        familyName.value = ""; // we clear the inputs
+        firstName.value = "";
+
         numberAvailableBikes++ // we replace the bike
         sessionStorage.clear()
         localStorage.clear()
