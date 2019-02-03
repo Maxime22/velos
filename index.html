@@ -106,6 +106,7 @@
     <footer class="container-fluid centerText">
         <div>
             <div id="webStorageInfos">Pas de réservation pour le moment</div>
+            <div id="timerDiv"></div>
             <input type="button" id="cancelAllButton" class="btn btn-danger" value="Annuler la réservation"></input>
         </div>
     </footer>
@@ -118,7 +119,6 @@
     <script src="js/sliderclass.js"></script>
     <script src="js/map.js"></script>
     <script src="js/reservation.js"></script>
-    <script src="js/timer.js"></script>
 
     <script type="text/javascript">
         let slider = new Slider;
@@ -194,12 +194,6 @@
         }
         reservation.initReservation(configCanvas);
         reservation.createReservation();
-
-    </script>
-    <script>
-        let timer = new Timer;
-        timer.initTimer();
-        timer.createTimer();
 
     </script>
 
