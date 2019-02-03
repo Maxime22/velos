@@ -43,15 +43,16 @@ class Slider {
             let figcaption = document.createElement("figcaption");
             let figcaptionTitle = document.createElement("div");
             let figcaptionDescription = document.createElement("div");
+            let figcaptionImage = document.createElement("figure")
             let btnSlide = document.createElement("a");
 
             this.createImages(figure, image, elementImage, index)
-            this.createFigcaptions(figcaption, figcaptionTitle, figcaptionDescription, elementImage, index, btnSlide)
+            this.createFigcaptions(figcaption, figcaptionTitle, figcaptionDescription, elementImage, index, btnSlide, figcaptionImage)
 
             if (index !== 0) { figure.style.display = "none" }
             /*   figure.style.opacity = '0'  */ // DURING THE CREATION, DELETE DISPLAY FOR OTHER SLIDES
 
-            this.appendChildImg(figcaption, figcaptionTitle, figcaptionDescription, index, btnSlide, figure, image, divFigure)
+            this.appendChildImg(figcaption, figcaptionTitle, figcaptionDescription, index, btnSlide, figure, image, divFigure, figcaptionImage)
         });
 
         sliderContainer.appendChild(divFigure);
@@ -66,32 +67,59 @@ class Slider {
         image.classList.add("imgSlider");
     }
 
-    createFigcaptions(figcaption, figcaptionTitle, figcaptionDescription, elementImage, index, btnSlide) {
+    createFigcaptions(figcaption, figcaptionTitle, figcaptionDescription, elementImage, index, btnSlide, figcaptionImage) {
         figcaption.classList.add("blockFigcaption");
 
         for (let i = 0; i < elementImage.figcaption.length; i++) {
-            if (elementImage.figcaption[i].type === "title") { // TITLE
-                figcaptionTitle.classList.add("titleDiap");
-                figcaptionTitle.textContent = elementImage.figcaption[i].value;
+            if (elementImage.figcaption[i].type === "title") { // Title with special css for the first slide
+                this.createSpecialTitle(figcaptionTitle, elementImage, i)
             }
-            if (elementImage.figcaption[i].type === "text") { // TEXT
+            if (elementImage.figcaption[i].type === "text") { // Text
                 figcaptionDescription.textContent = elementImage.figcaption[i].value;
             }
-            if (elementImage.figcaption[i].type === "button") { // BUTTONS
+            if (elementImage.figcaption[i].type === "button") {
                 btnSlide.classList.add("btn", "btn-primary", "firstButtonSlide");
                 btnSlide.textContent = elementImage.figcaption[i].value;
+            }
+            if (elementImage.figcaption[i].type === "imageExplanation") { // Images for explanations
+                let imageExplanation = document.createElement("img")
+
+                imageExplanation.setAttribute('src', elementImage.figcaption[i].url);
+                imageExplanation.setAttribute('alt', elementImage.figcaption[i].alt);
+                imageExplanation.setAttribute('title', elementImage.figcaption[i].title);
+                imageExplanation.classList.add("imgExplanations");
+
+                figcaptionImage.appendChild(imageExplanation)
             }
         }
 
         index === 0 ? figcaptionDescription.classList.add("instructions") : figcaptionDescription.classList.add("instructionsWhite");
     }
 
-    appendChildImg(figcaption, figcaptionTitle, figcaptionDescription, index, btnSlide, figure, image, divFigure) {
+    createSpecialTitle(figcaptionTitle, elementImage, i) {
+        let mainSpan = document.createElement("span")
+        let intermediateSpan = document.createElement("span")
+        let lastSpan = document.createElement("span")
+
+        mainSpan.classList.add("lobsterStyle");
+        mainSpan.textContent = elementImage.figcaption[i].mainSpan
+        intermediateSpan.textContent = elementImage.figcaption[i].intermediateSpan
+        lastSpan.classList.add("vertT")
+        lastSpan.textContent = elementImage.figcaption[i].lastSpan
+
+        figcaptionTitle.classList.add("titleDiap");
+        figcaptionTitle.appendChild(mainSpan)
+        figcaptionTitle.appendChild(intermediateSpan)
+        figcaptionTitle.appendChild(lastSpan)
+    }
+
+    appendChildImg(figcaption, figcaptionTitle, figcaptionDescription, index, btnSlide, figure, image, divFigure, figcaptionImage) {
         figcaption.appendChild(figcaptionTitle);
         figcaption.appendChild(figcaptionDescription);
         if (index === 0) {
             figcaption.appendChild(btnSlide);
         }
+        figcaption.appendChild(figcaptionImage);
         figure.appendChild(image);
         figure.appendChild(figcaption);
         divFigure.appendChild(figure);

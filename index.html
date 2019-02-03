@@ -127,18 +127,21 @@
         let slider = new Slider;
         let figcaptionsSlider = [
             [
-                { type: 'title', value: "SMF Vélos , l'application de réservation écolo !" },
+                { type: 'title', mainSpan:"SMF Vélos", intermediateSpan: ", l'application de réservation ", lastSpan:"écolo !" },
                 { type: 'text', value: "Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !" },
                 { type: 'button', value: "Cliquez-ici pour en savoir plus" }
             ],
             [
-                { type: 'text', value: "2" }
+                { type: 'text', value: "Tout d'abord, descendez ci-dessous et observez la carte. Chaque couleur représente un taux de remplissage et chaque taille représente le nombre total de vélos" },
+                { type: 'imageExplanation', url: "images/explanationMarkers.png", alt:"Explication des marqueurs de la carte", title:"Explication des marqueurs de la carte" }
             ],
             [
-                { type: 'text', value: "3" }
+                { type: 'text', value: "Ensuite, cliquez sur l'un des marqueurs et observez les détails de la station. Vous pouvez désormais cliquer sur 'Réserver' ! " },
+                { type: 'imageExplanation', url: "images/detailsStation.png", alt:"Détails d'une station", title:"Détails d'une station" }
             ],
             [
-                { type: 'text', value: "4" }
+                { type: 'text', value: "Enfin, signez et validez ! Votre réservation est alors valide pour 20 min, vous pouvez toutefois décider de l'annuler si vous le souhaitez. Une seule réservation est possible à la fois." },
+                { type: 'imageExplanation', url: "images/signImage.png", alt:"Signature Exemple", title:"Exemple de signature" }
             ]
         ];
         let imgs = [
@@ -147,16 +150,16 @@
                 title: "SMF Vélos , l'application de réservation écolo !", figcaption: figcaptionsSlider[0]
             },
             {
-                url: 'images/bicycleBlue.jpg', alt: 'Vélo bleu', title: "COMPLETE",
+                url: 'images/bicycleBlue.jpg', alt: 'Vélo bleu', title: "Présentation de la carte",
                 figcaption: figcaptionsSlider[1]
             },
             {
-                url: 'images/bicycleCouple2.jpg', alt: 'Couple sur un vélo 2', title: "COMPLETE",
+                url: 'images/bicycleCouple2.jpg', alt: 'Couple sur un vélo 2', title: "Explication des détails des stations de vélos",
                 figcaption: figcaptionsSlider[2]
             },
             {
-                url: 'images/bicycleRoad.jpg', alt: 'Couple sur un vélo, présentation SMF',
-                title: "COMPLETE", figcaption: figcaptionsSlider[3]
+                url: 'images/bicycleRoad.jpg', alt: 'Vélo seul',
+                title: "Explication canvas et validation", figcaption: figcaptionsSlider[3]
             }
         ]
 
