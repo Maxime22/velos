@@ -59,7 +59,8 @@
                     <div id='titleStation'>
                         Détails de la station
                     </div>
-                    <span id="startMessageInformation">Aucune station selectionnée pour le moment, veuillez en selectionner une pour effectuer votre réservation</span>
+                    <span id="startMessageInformation">Aucune station selectionnée pour le moment, veuillez en
+                        selectionner une pour effectuer votre réservation</span>
                     <div id="allDetailsOfTheReservation">
                         <p class="paraStations">Nom de la station :
                             <span id='stationName'></span>
@@ -88,16 +89,22 @@
                                     Réservation
                                 </div>
                             </legend>
-                            <div>
-                                <label for="nameFam">Nom</label> :
-                                <input type="text" name="nameFam" id="nameFam" class="form-control" required>
+                            <span id="startMessageReservation">Aucune station selectionnée pour le moment, veuillez en
+                                selectionner une pour effectuer votre réservation</span>
+                            <div id="formReservationForm">
+                                <div class="form-group">
+                                    <label for="nameFam">Nom</label> :
+                                    <input type="text" name="nameFam" id="nameFam" class="form-control" required>
+                                    <div class="invalid-feedback">Le nom doit comporter au moins 3 caractères</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nameFirst">Prénom</label> :
+                                    <input type="text" name="nameFirst" id="nameFirst" class="form-control" required>
+                                    <div class="invalid-feedback">Le nom doit comporter au moins 3 caractères</div>
+                                </div>
+                                <button type="button" id="reservationBtn" class="btn btn-primary" disabled>Réserver</button>
+                                <div id="containerCanvas"></div>
                             </div>
-                            <div>
-                                <label for="nameFirst">Prénom</label> :
-                                <input type="text" name="nameFirst" id="nameFirst" class="form-control" required>
-                            </div>
-                            <button type="button" id="reservationBtn" class="btn btn-primary" disabled>Réserver</button>
-                            <div id="containerCanvas"></div>
                         </fieldset>
                     </form>
                 </div>
@@ -126,21 +133,21 @@
         let slider = new Slider;
         let figcaptionsSlider = [
             [
-                { type: 'title', mainSpan:"SMF Vélos", intermediateSpan: ", l'application de réservation ", lastSpan:"écolo !" },
+                { type: 'title', mainSpan: "SMF Vélos", intermediateSpan: ", l'application de réservation ", lastSpan: "écolo !" },
                 { type: 'text', value: "Ce diaporama vous explique toute la démarche à suivre pour réserver en ligne, alors n'hésitez plus !" },
                 { type: 'button', value: "Cliquez-ici pour en savoir plus" }
             ],
             [
-                { type: 'text', value: "Tout d'abord, descendez ci-dessous et observez la carte. Chaque couleur représente un taux de remplissage et chaque taille représente le nombre total de vélos" },
-                { type: 'imageExplanation', url: "images/explanationMarkers.png", alt:"Explication des marqueurs de la carte", title:"Explication des marqueurs de la carte" }
+                { type: 'text', value: "Tout d'abord, observez la carte : Chaque couleur représente un taux de remplissage et chaque taille représente le nombre total de vélos." },
+                { type: 'imageExplanation', url: "images/explanationMarkers.png", alt: "Explication des marqueurs de la carte", title: "Explication des marqueurs de la carte" }
             ],
             [
                 { type: 'text', value: "Ensuite, cliquez sur l'un des marqueurs et observez les détails de la station. Vous pouvez désormais cliquer sur 'Réserver' ! " },
-                { type: 'imageExplanation', url: "images/detailsStation.png", alt:"Détails d'une station", title:"Détails d'une station" }
+                { type: 'imageExplanation', url: "images/detailsStation.png", alt: "Détails d'une station", title: "Détails d'une station" }
             ],
             [
                 { type: 'text', value: "Enfin, signez et validez ! Votre réservation est alors valide pour 20 min, vous pouvez toutefois décider de l'annuler si vous le souhaitez. Une seule réservation est possible à la fois." },
-                { type: 'imageExplanation', url: "images/signImage.png", alt:"Signature Exemple", title:"Exemple de signature" }
+                { type: 'imageExplanation', url: "images/signImage.png", alt: "Signature Exemple", title: "Exemple de signature" }
             ]
         ];
         let imgs = [

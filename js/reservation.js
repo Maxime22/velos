@@ -11,6 +11,8 @@ class Reservation {
         this.intvl = null;
         this.min = null;
         this.sec = null;
+        this.firstNameValidation = null;
+        this.familyNameValidation = null;
     }
 
     initReservation(configCanvas) {
@@ -23,6 +25,8 @@ class Reservation {
         this.isCanvasFilled = false;
         this.min = 20;
         this.sec = 0;
+        this.firstNameValidation = false;
+        this.familyNameValidation = false;
     }
 
     createReservation() {
@@ -34,27 +38,53 @@ class Reservation {
     /* RESERVATION LOGIC */
 
     createListenerReservations() {
-        let divContainerCanvas = document.getElementById(this.idContainerCanvas)
         let familyName = document.getElementById("nameFam")
         let firstName = document.getElementById("nameFirst")
+        let invalidFeedBackIndexFamilyName = 0;
+        let invalidFeedBackIndexFirstName = 1;
 
         this.createBtnReservationListener()
 
         familyName.addEventListener("input", (e) => { // called each time the input is changed
-            if (e.target.value === "") {
-                this.updateCanvas() // delete the signature
-                divContainerCanvas.style.display = "none" // delete the canvas container and the buttons if an input is not filled
-                this.displayValid = false;
-            }
+            this.checkName(e, familyName, invalidFeedBackIndexFamilyName)
         })
 
         firstName.addEventListener("input", (e) => {
-            if (e.target.value === "") {
-                this.updateCanvas() // delete the signature
-                divContainerCanvas.style.display = "none" // delete the canvas container and the buttons if an input is not filled
-                this.displayValid = false;
-            }
+            this.checkName(e, firstName, invalidFeedBackIndexFirstName)
         })
+    }
+
+    checkName(e, name, invalidFeedbackIndex) {
+        let divContainerCanvas = document.getElementById(this.idContainerCanvas)
+        let btnReservation = document.getElementById("reservationBtn")
+        let regexNames = new RegExp(/^[\w'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/, 'i');
+        let invalidFeedback = document.getElementsByClassName("invalid-feedback")
+
+        if (e.target.value === "") {
+            name.classList.remove("is-invalid")
+            name.classList.remove("is-valid")
+            invalidFeedback[invalidFeedbackIndex].style.display = "none"
+        } else if (regexNames.test(e.target.value)) { // a name has more than 2 characters
+            e.target.name === "nameFam" ? this.familyNameValidation = true : this.firstNameValidation = true
+
+            invalidFeedback[invalidFeedbackIndex].style.display = "none"
+            name.classList.add("is-valid")
+            name.classList.remove("is-invalid")
+        } else {
+            e.target.name === "nameFam" ? this.familyNameValidation = false : this.firstNameValidation = false
+
+            name.classList.add("is-invalid")
+            name.classList.remove("is-valid")
+            invalidFeedback[invalidFeedbackIndex].style.display = "block"
+        }
+        if (this.familyNameValidation && this.firstNameValidation) {
+            btnReservation.removeAttribute("disabled")
+        } else {
+            this.updateCanvas() // delete the signature
+            divContainerCanvas.style.display = "none" // delete the canvas container and the buttons if an input is not filled
+            this.displayValid = false;
+            btnReservation.disabled = true;
+        }
     }
 
     createBtnReservationListener() {
@@ -117,7 +147,7 @@ class Reservation {
 
         numberAvailableBikes-- // we take a bike
         if (numberAvailableBikes !== 0) { // we check if we have more than 0 otherwise we tell it to the customer
-            buttonReservation.removeAttribute("disabled")
+            /* buttonReservation.removeAttribute("disabled") */
             messageBikesAvailable.textContent = ""
         } else {
             buttonReservation.disabled = true;
@@ -283,7 +313,7 @@ class Reservation {
             reservationInformations.textContent = "Une réservation à la station " + sessionStorage.getItem("stationName") + " a été faite par " + " " + localStorage.getItem("familyName") + localStorage.getItem("firstName")
         }
 
-        if(sessionStorage.getItem("seconds") && sessionStorage.getItem("minutes")){ // if we reload the page, we retake the timer
+        if (sessionStorage.getItem("seconds") && sessionStorage.getItem("minutes")) { // if we reload the page, we retake the timer
             this.min = sessionStorage.getItem("minutes") // we change the value of the constructor to start the timer where we where before reloading the page
             this.sec = sessionStorage.getItem("seconds")
             this.createTimer()
@@ -330,6 +360,8 @@ class Reservation {
 
         familyName.value = ""; // we clear the inputs
         firstName.value = "";
+        familyName.classList.remove("is-valid");
+        firstName.classList.remove("is-valid");
 
         numberAvailableBikes++ // we replace the bike
         sessionStorage.clear()

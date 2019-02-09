@@ -29,7 +29,7 @@ class Map {
     // We use the JCDECAUX API and the ajaxGet function, the second parameter is the callback function
     createMarkersAndInitStations() {
         // Clear all the markers in the Cluster
-        this.markerClusters.clearLayers();
+        this.markerClusters.clearLayers()
         this.ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=creteil&apiKey=1f9c43ee6a3f921ba77e7aa991c9dcd9a957a85f", (response) => {
             // Take the stations from the API JCDECAUX    
             let creteilStations = JSON.parse(response);
@@ -56,7 +56,8 @@ class Map {
                 marker.on('click', this.onClickMarker) // On is like addEventListener
                 // marker.bindPopup(station.name); // Add a pop up to see the address of each station
             });
-            this.myMap.addLayer(this.markerClusters); // JE NE COMPRENDS PAS POURQUOI CA ENLEVE LES MARKERS ET NE RAJOUTE PAS UNE COUCHE SUPPLEMENTAIRE DANS LA MAP...
+            // this.myMap.clearLayers()
+            this.myMap.addLayer(this.markerClusters)
         });
     }
 
@@ -72,6 +73,8 @@ class Map {
         let messageBikesAvailable = document.getElementById("messageBikeAvailable")
         let allDetailsOfTheReservation = document.getElementById("allDetailsOfTheReservation") // display the informations
         let startMessageInformation = document.getElementById("startMessageInformation")
+        let startMessageReservation = document.getElementById("startMessageReservation")
+        let allFormReservation = document.getElementById("formReservationForm")
 
         stationName.textContent = eventMarker.target.station_name;
         stationAddress.textContent = eventMarker.target.station_address;
@@ -95,7 +98,9 @@ class Map {
         }
 
         startMessageInformation.textContent = "";
+        startMessageReservation.textContent = "";
         allDetailsOfTheReservation.style.display = "block";
+        allFormReservation.style.display = "block";
     }
 
     updateIcons(station) { // en fonction de la station => je crée des icones différentes

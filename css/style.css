@@ -250,6 +250,10 @@ nav ul li a:hover {
     padding: 20px;
 }
 
+#formReservationForm{
+    display: none;
+}
+
 #allDetailsOfTheReservation{
     display:none;
 }
