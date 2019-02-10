@@ -9,8 +9,7 @@ class Reservation {
         this.canIDraw = null;
         this.isCanvasFilled = null;
         this.intvl = null;
-        this.min = null;
-        this.sec = null;
+        this.dateStartTimer = null;
         this.firstNameValidation = null;
         this.familyNameValidation = null;
     }
@@ -23,8 +22,6 @@ class Reservation {
         this.displayValid = false;
         this.canIDraw = false;
         this.isCanvasFilled = false;
-        this.min = 20;
-        this.sec = 0;
         this.firstNameValidation = false;
         this.familyNameValidation = false;
     }
@@ -123,7 +120,9 @@ class Reservation {
         localStorage.setItem("firstName", firstName.value) // store the first name in the API Web Storage
         sessionStorage.setItem("alreadyReserved", true) // create a storage for the reservation checking, to not be able to reserve several times
 
-        this.createTimer(this.min, this.sec) // create the timer with constructor values (20 minutes)
+        this.dateStartTimer = Date.now() + 20 * 60 * 1000; // 20 min from the moment you click
+        sessionStorage.setItem("dateClicked", this.dateStartTimer)
+        this.createTimer() // create the timer with constructor values (20 minutes)
 
         buttonCancelAll.style.display = "inline-block";
 
@@ -298,8 +297,6 @@ class Reservation {
         let buttonCancelAll = document.getElementById("cancelAllButton")
 
         buttonCancelAll.addEventListener("click", () => {
-            this.min = 20
-            this.sec = 0
             this.cancelAll()
         })
     }
@@ -313,39 +310,37 @@ class Reservation {
             reservationInformations.textContent = "Une réservation à la station " + sessionStorage.getItem("stationName") + " a été faite par " + " " + localStorage.getItem("familyName") + localStorage.getItem("firstName")
         }
 
-        if (sessionStorage.getItem("seconds") && sessionStorage.getItem("minutes")) { // if we reload the page, we retake the timer
-            this.min = sessionStorage.getItem("minutes") // we change the value of the constructor to start the timer where we where before reloading the page
-            this.sec = sessionStorage.getItem("seconds")
-            this.createTimer()
+        if (sessionStorage.getItem("dateClicked")) { // if we reload the page, we retake the timer
+            let remainingTime = Number(sessionStorage.getItem("dateClicked")) - Date.now()
+            if (remainingTime > 0) {
+                this.dateStartTimer = Number(sessionStorage.getItem("dateClicked")) // dateStartTimer should never move to do the calculation in updateTimer
+                this.createTimer()
+            }else{
+                this.cancelAll()
+            }
         }
     }
 
     createTimer() {
         let timerDiv = document.getElementById("timerDiv")
-
         this.intvl = setInterval(() => { this.updateTimer(timerDiv) }, 1000)
     }
 
     updateTimer(timerDiv) {
-        sessionStorage.setItem("minutes", this.min)
-        sessionStorage.setItem("seconds", this.sec)
+        let updatedDate = new Date();
 
-        console.log('sessionStorage.getItem("seconds") : ', sessionStorage.getItem("seconds"))
+        let remainingTime = this.dateStartTimer - updatedDate.getTime()
 
-        if (this.min === 0 && this.sec === 0) { // when the timer is finished we clear the interval and cancel the validation
-            this.min = 20 // we reinitialize the counter, the seconds are already at 0
+        let remainingTimeMinutes = Math.floor((remainingTime / 60000))
+        let remainingTimeSeconds = ((remainingTime - (remainingTimeMinutes * 60000)) / 1000).toFixed(0)
+
+        if (remainingTime <= 0) {
             this.cancelAll()
-        }
-
-        if (this.sec !== 0) { // if the seconds are different from 0 we decrease the seconds each seconds
-            this.sec--
-        } else { // otherwise it means we have the second at 0 so we have to decrease the minutes
-            this.min--
-            this.sec = 59
-        }
-
-        if (!(this.min === 0 && this.sec === 0)) { // we don't want to display that again at the end of the timer
-            timerDiv.textContent = "Temps restant : " + this.min + " min " + this.sec + " secs"
+        } else { // we don't want to display that again at the end of the timer
+            if (remainingTimeSeconds === 60) {
+                remainingTimeSeconds = 0;
+            }
+            timerDiv.textContent = "Temps restant : " + remainingTimeMinutes + " min " + remainingTimeSeconds + " secs"
         }
     }
 
