@@ -327,7 +327,7 @@ class Reservation {
     }
 
     updateTimer(timerDiv) {
-        let updatedDate = new Date();
+        let updatedDate = new Date(); // new Date + getTime is the same as Date.now()
 
         let remainingTime = this.dateStartTimer - updatedDate.getTime()
 

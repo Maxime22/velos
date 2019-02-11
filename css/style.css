@@ -31,7 +31,7 @@ header {
     line-height: 88px;
 }
 
-.nav-link{
+.nav-link {
     color: white;
 }
 
@@ -64,13 +64,21 @@ nav ul li a:hover {
     height: 88px;
 }
 
+.barsMenu {
+    color: white;
+}
+
+button:focus {
+    outline: none;
+}
+
 /* SLIDER */
 
-.divFigure{
+.divFigure {
     position: relative;
 }
 
-#diaporama{
+#diaporama {
     height: 720px;
 }
 
@@ -218,13 +226,13 @@ nav ul li a:hover {
     margin: auto;
 }
 
-.imgExplanations{
+.imgExplanations {
     box-shadow: 2px 2px 10px black;
 }
 
 /* MAP AND FORM */
 
-#reservation{
+#reservation {
     padding-bottom: 20px;
     padding-top: 20px;
     background-color: #ffffe5;
@@ -250,12 +258,12 @@ nav ul li a:hover {
     padding: 20px;
 }
 
-#formReservationForm{
+#formReservationForm {
     display: none;
 }
 
-#allDetailsOfTheReservation{
-    display:none;
+#allDetailsOfTheReservation {
+    display: none;
 }
 
 #reservationBtn {
@@ -277,48 +285,48 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
-#secondTitleStation{
+#secondTitleStation {
     padding-bottom: 0px;
 }
 
-#messageBikeAvailable{
+#messageBikeAvailable {
     font-family: 'Lobster';
     color: red;
     font-weight: bold;
     font-size: 22px;
 }
 
-#secondButton{
+#secondButton {
     padding: 5px;
 }
 
-.paraStations{
+.paraStations {
     font-weight: 500;
     color: gray;
 }
 
-#stationName, #stationAddress, #stationStatus, #nbTotalPlace, #availablePlaces, #availableBikes{
+#stationName, #stationAddress, #stationStatus, #nbTotalPlace, #availablePlaces, #availableBikes {
     color: #3878b1;
 }
 
 /* CANVAS */
 
-canvas{
+canvas {
     border: 1px black solid;
     background-color: white;
 }
 
-#containerCanvas{
+#containerCanvas {
     margin-top: 10px;
-    display:none;
+    display: none;
 }
 
-#containerButtonsCanvas{
+#containerButtonsCanvas {
     padding-top: 10px;
 }
 
-#buttonFirstCanvasValidation{
-    margin-right:10px;
+#buttonFirstCanvasValidation {
+    margin-right: 10px;
 }
 
 /* FOOTER */
@@ -331,7 +339,81 @@ footer {
     font-weight: bold;
 }
 
-#cancelAllButton{
+#cancelAllButton {
     margin-top: 10px;
     display: none;
+}
+
+/* MEDIA QUERIES */
+
+@media all and (max-width: 1100px) {
+    /* SLIDER */
+    .instructions, .instructionsWhite {
+        font-size: 30px;
+    }
+}
+
+@media all and (max-width: 900px) {
+    /* SLIDER */
+    .instructions, .instructionsWhite {
+        font-size: 25px;
+    }
+    .titleDiap {
+        font-size: 32px;
+    }
+    .lobsterStyle {
+        font-size: 50px;
+    }
+    .imgExplanations {
+        width: 80%;
+        max-height: 230px;
+    }
+}
+
+@media all and (max-width: 800px) {
+    /* SLIDER */
+    #diaporama, .figureDiap, .imgSlider {
+        height: 500px;
+    }
+    .blockFigcaption {
+        top: 100px;
+    }
+    .signExample {
+        width: 40% !important;
+    }
+}
+
+@media all and (max-width: 575px) {
+    /* HEADER */
+    header {
+        line-height: 50px;
+    }
+    .nav-link {
+        text-align: center;
+    }
+    #diapoNavItem {
+        margin-top: 10px;
+        border-top: 2px #92c7fd solid;
+    }
+    #reservNavItem {
+        border-top: 2px #92c7fd solid;
+    }
+    nav ul li a:hover {
+        border-top: 4px solid rgba(0, 19, 53, 0);
+        border-bottom: 4px solid rgba(0, 19, 53, 0);
+    }
+    /* SLIDER */
+    .instructions, .instructionsWhite {
+        font-size: 20px;
+    }
+    .titleDiap {
+        font-size: 28px;
+    }
+    .lobsterStyle {
+        font-size: 40px;
+    }
+    /* FORM RESERVATION */
+    #formReservation {
+        margin-top: 20px;
+    }
 }

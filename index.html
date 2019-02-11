@@ -7,38 +7,49 @@
     <title>SMF Vélos, réservation de vélos</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <meta name="title" content="SMF Vélos : La réservation en un clic !">
-    <meta name="description" content="SMF Vélos est la référence pour réserver un vélo à Saint-Maur-des-Fossés. En effet, son diaporama
+    <meta name="description"
+        content="SMF Vélos est la référence pour réserver un vélo à Saint-Maur-des-Fossés. En effet, son diaporama
     explicatif et sa carte interactive permette, en un tour de main, de prendre un vélo dans la ville. Celui-ci reste disponible une
     vingtaine de minutes puis est remis à disposition. La ville demande simplement une petite signature, un nom et un prénom. Bonne route !">
     <meta name="keywords" content="bike reservation, bike rent">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- normalize.css is included in bootstrap -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+        integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
         crossorigin="" />
     <!-- MarkerCluster used for assembling markers -->
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
 </head>
 
 <body>
     <header class="container-fluid">
         <div class="row">
             <nav class="navbar fixed-top navbar-expand-sm">
-                <a class="navbar-brand" href="index.html"><img src="images/logovelo.png" alt="Logo SMF Vélos" id="imgLogo" /></a>
+                <a class="navbar-brand" href="index.html"><img src="images/logovelo.png" alt="Logo SMF Vélos"
+                        id="imgLogo" /></a>
 
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html#diaporama">Diaporama</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#reservation">Réservation</a></li>
-                </ul>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false"
+                    aria-label="Toggle navigation"><span class="barsMenu"><i
+                            class="fas fa-bars fa-2x"></i></span></button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+                    <ul class="navbar-nav ml-auto">
+                        <li id="diapoNavItem" class="nav-item"><a class="nav-link" href="index.html#diaporama">Diaporama</a></li>
+                        <li id="reservNavItem" class="nav-item"><a class="nav-link" href="index.html#reservation">Réservation</a></li>
+                    </ul>
+                </div>
             </nav>
         </div>
-
     </header>
 
     <section id="diaporama" class="container-fluid">
@@ -102,7 +113,8 @@
                                     <input type="text" name="nameFirst" id="nameFirst" class="form-control" required>
                                     <div class="invalid-feedback">Le nom doit comporter au moins 3 caractères</div>
                                 </div>
-                                <button type="button" id="reservationBtn" class="btn btn-primary" disabled>Réserver</button>
+                                <button type="button" id="reservationBtn" class="btn btn-primary"
+                                    disabled>Réserver</button>
                                 <div id="containerCanvas"></div>
                             </div>
                         </fieldset>
@@ -120,11 +132,24 @@
         </div>
     </footer>
 
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
     <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+        integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
         crossorigin=""></script>
     <!-- MarkerCluster JS -->
-    <script type='text/javascript' src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
+    <script type='text/javascript'
+        src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
     <script src="js/sliderclass.js"></script>
     <script src="js/map.js"></script>
     <script src="js/reservation.js"></script>
@@ -147,7 +172,7 @@
             ],
             [
                 { type: 'text', value: "Enfin, signez et validez ! Votre réservation est alors valide pour 20 min, vous pouvez toutefois décider de l'annuler si vous le souhaitez. Une seule réservation est possible à la fois." },
-                { type: 'imageExplanation', url: "images/signImage.png", alt: "Signature Exemple", title: "Exemple de signature" }
+                { type: 'imageExplanation', url: "images/signImage.png", alt: "Signature Exemple", title: "Exemple de signature", specialClass: "signExample" }
             ]
         ];
         let imgs = [

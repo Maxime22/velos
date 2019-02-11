@@ -88,6 +88,9 @@ class Slider {
                 imageExplanation.setAttribute('alt', elementImage.figcaption[i].alt);
                 imageExplanation.setAttribute('title', elementImage.figcaption[i].title);
                 imageExplanation.classList.add("imgExplanations");
+                if(elementImage.figcaption[i].specialClass){
+                    imageExplanation.classList.add(elementImage.figcaption[i].specialClass);
+                }
 
                 figcaptionImage.appendChild(imageExplanation)
             }
@@ -155,10 +158,10 @@ class Slider {
             let icoStop = document.createElement("i");
 
             divControl.classList.add("col-12", "row", "controlDiap");
-            startContain.classList.add("offset-5", "col-1");
+            startContain.classList.add("offset-4", "col-1");
             restartBtn.classList.add("startDiap");
             icoStart.classList.add("fas", "fa-play");
-            stopContain.classList.add("col-1");
+            stopContain.classList.add("col-1", "offset-2");
             stopBtn.classList.add("stopDiap");
             icoStop.classList.add("fas", "fa-pause");
 
