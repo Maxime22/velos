@@ -76,6 +76,7 @@ button:focus {
 
 .divFigure {
     position: relative;
+    width: 100%;
 }
 
 #diaporama {
@@ -166,7 +167,8 @@ button:focus {
     cursor: pointer;
     position: absolute;
     text-align: center;
-    top: 45%;
+    top: 50%;
+    transform: translateY(-50%);
     width: 50px;
     margin-top: -22px;
     color: white !important;
@@ -176,6 +178,7 @@ button:focus {
 }
 
 .prev {
+    left: 0;
     padding-right: 5px;
     border-radius: 0px 50px 50px 0px;
     padding-top: 20px;
@@ -199,6 +202,7 @@ button:focus {
     background-color: grey;
     height: 10px;
     bottom: 16px;
+    left: 0px;
     position: absolute;
 }
 
@@ -283,6 +287,7 @@ button:focus {
     padding-bottom: 20px;
     color: #26ad2a;
     text-decoration: underline;
+    text-align: center;
 }
 
 #secondTitleStation {
